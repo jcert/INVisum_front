@@ -1,0 +1,43 @@
+<ion-header>
+
+  <ion-navbar>
+    <ion-title>{{ 'Login' | translate }}</ion-title>
+  </ion-navbar>
+
+</ion-header>
+
+
+<ion-content>
+  <form (submit)="doSignup()">
+    <ion-list>
+
+      <ion-item>
+        <ion-label fixed><ion-icon name="at" color="bright"></ion-icon></ion-label>
+        <ion-input type="email" [(ngModel)]="account.email" name="email"></ion-input>
+      </ion-item>
+
+      <!--
+      Want to add a Username? Here you go:
+
+      <ion-item>
+        <ion-label floating>Username</ion-label>
+        <ion-input type="text" [(ngModel)]="account.username" name="username"></ion-input>
+      </ion-item>
+      -->
+
+      <ion-item>
+        <ion-label fixed><ion-icon name="key" color="bright"></ion-icon></ion-label>
+        <ion-input type="password" [(ngModel)]="account.password" name="password"></ion-input>
+      </ion-item>
+      
+      <div>
+        <button ion-button color="primary" block>{{ 'ENTRAR' | translate }}</button>
+      </div>
+      
+      <ion-item inline >
+      <p class="botao-cadastro" (click)="cadastro()">{{ 'Quer se cadastrar?' | translate }}</p>
+      </ion-item>
+
+    </ion-list>
+  </form>
+</ion-content>

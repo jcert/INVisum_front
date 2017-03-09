@@ -1,0 +1,33 @@
+
+<ion-header>
+  <ion-navbar>
+    <button *ngIf="is_logged()" ion-button menuToggle icon-only>
+      <ion-icon name='menu'></ion-icon>
+    </button>
+  </ion-navbar>
+</ion-header>
+<ion-content scroll="false">
+  <div class="splash-bg"></div>
+  <div class="splash-info">
+    <div class="splash-logo"></div>
+  </div>
+  <div padding>
+    <button ion-button block (click)="busca()" class="busca">{{ 'Busca' | translate }}</button>
+    <button *ngIf="  is_logged()" ion-button block (click)="historico()" class="historico">{{ 'Historico' | translate }}</button>
+    <button *ngIf="  is_logged()" ion-button block (click)="perfil()" class="perfil">{{ 'Perfil' | translate }}</button>
+    <button *ngIf="! is_logged()" ion-button block (click)="login()"  class="login" >{{ 'Login' | translate }}</button>
+    <button *ngIf="  is_logged()" ion-button block (click)="logout()" class="logout">{{ 'Logout' | translate }}</button>
+  </div>
+   
+</ion-content>
+
+<ion-footer center class="footer">
+  <a inline (click)="faq()" class="bottom-text">{{ 'FAQ' | translate }}</a>
+  <a inline> | </a>
+  <a inline (click)="api()" class="bottom-text">{{ 'API' | translate }}</a>
+  <a inline> | </a>
+  <a inline (click)="legal()" class="bottom-text">{{ 'Legal' | translate }}</a>
+
+</ion-footer>
+
+<ion-nav #mycontent [root]="rootPage"></ion-nav> 
