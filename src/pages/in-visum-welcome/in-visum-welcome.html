@@ -1,7 +1,7 @@
 
-<ion-header>
+<ion-header *ngIf="is_logged()">
   <ion-navbar>
-    <button *ngIf="is_logged()" ion-button menuToggle icon-only>
+    <button ion-button menuToggle icon-only>
       <ion-icon name='menu'></ion-icon>
     </button>
   </ion-navbar>
@@ -18,16 +18,16 @@
     <button *ngIf="! is_logged()" ion-button block (click)="login()"  class="login" >{{ 'Login' | translate }}</button>
     <button *ngIf="  is_logged()" ion-button block (click)="logout()" class="logout">{{ 'Logout' | translate }}</button>
   </div>
+ 
+  <div center class="footer">
+    <a inline (click)="faq()" class="bottom-text">{{ 'FAQ' | translate }}</a>
+    <a inline> | </a>
+    <a inline (click)="api()" class="bottom-text">{{ 'API' | translate }}</a>
+    <a inline> | </a>
+    <a inline (click)="legal()" class="bottom-text">{{ 'Legal' | translate }}</a>
+
+  </div>
    
 </ion-content>
-
-<ion-footer center class="footer">
-  <a inline (click)="faq()" class="bottom-text">{{ 'FAQ' | translate }}</a>
-  <a inline> | </a>
-  <a inline (click)="api()" class="bottom-text">{{ 'API' | translate }}</a>
-  <a inline> | </a>
-  <a inline (click)="legal()" class="bottom-text">{{ 'Legal' | translate }}</a>
-
-</ion-footer>
 
 <ion-nav #mycontent [root]="rootPage"></ion-nav> 

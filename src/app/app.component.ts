@@ -3,6 +3,7 @@ import {Platform, Nav, Config} from 'ionic-angular';
 import { StatusBar, Splashscreen } from 'ionic-native';
 
 import { Settings } from '../providers/providers';
+import { FakeUser } from '../providers/user';
 
 import { FirstRunPage } from '../pages/pages';
 import { InVisumWelcomePage } from '../pages/in-visum-welcome/in-visum-welcome';
@@ -16,7 +17,7 @@ import { SearchPage } from '../pages/search/search';
 import { TranslateService } from 'ng2-translate/ng2-translate';
 
 @Component({
-  template: `<ion-menu [content]="content">
+  template: `<ion-menu *ngIf="is_logged()" [content]="content">
     <!--
     <ion-header>
       <ion-toolbar>
@@ -24,7 +25,7 @@ import { TranslateService } from 'ng2-translate/ng2-translate';
       </ion-toolbar>
     </ion-header>
     -->
-    <ion-content>
+    <ion-content >
       <ion-list>
         <button menuClose ion-item *ngFor="let p of pages" (click)="openPage(p)">
           {{p.title}}
@@ -50,7 +51,7 @@ export class MyApp {
     { title: 'Perfil', component: InVisumFAQPage }
   ]
 
-  constructor(translate: TranslateService, platform: Platform, settings: Settings, config: Config) {
+  constructor(translate: TranslateService, platform: Platform, settings: Settings, config: Config, public fu : FakeUser) {
     // Set the default language for translation strings, and the current language.
     translate.setDefaultLang('en');
     translate.use('en')
@@ -65,6 +66,9 @@ export class MyApp {
       StatusBar.styleDefault();
       Splashscreen.hide();
     });
+  }
+  is_logged() {
+    return this.fu.is_logged();
   }
   startingPage() {
     this.nav.setRoot(InVisumWelcomePage);
