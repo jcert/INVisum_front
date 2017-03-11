@@ -8,7 +8,6 @@ import { InVisumFAQPage } from '../in-visum-faq/in-visum-faq';
 import { InVisumLegalPage } from '../in-visum-legal/in-visum-legal';
 import { InVisumApiPage } from '../in-visum-api/in-visum-api';
 import { InVisumProfilePage } from '../in-visum-profile/in-visum-profile';
-import { ContentPage } from '../content/content';
 import { FakeUser } from '../../providers/user';
 
 /**
