@@ -8,7 +8,7 @@ import { FakeUser } from '../providers/user';
 import { FirstRunPage } from '../pages/pages';
 import { InVisumWelcomePage } from '../pages/in-visum-welcome/in-visum-welcome';
 import { InVisumFAQPage } from '../pages/in-visum-faq/in-visum-faq';
-import { SearchPage } from '../pages/search/search';
+import { InVisumSearchPage } from '../pages/in-visum-search/in-visum-search';
 
 import { TranslateService } from 'ng2-translate/ng2-translate';
 
@@ -44,7 +44,7 @@ export class MyApp {
   @ViewChild(Nav) nav: Nav;
 
   pages: any[] = [
-    { title: 'Busca', component: SearchPage },
+    { title: 'Busca', component: InVisumSearchPage },
     { title: 'Historico', component: InVisumFAQPage },
     { title: 'Perfil', component: InVisumFAQPage }
   ]
