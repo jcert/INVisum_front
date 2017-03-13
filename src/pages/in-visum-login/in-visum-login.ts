@@ -5,7 +5,6 @@ import { TranslateService } from 'ng2-translate/ng2-translate';
 
 import { InVisumWelcomePage } from '../in-visum-welcome/in-visum-welcome';
 import { User } from '../../providers/user';
-import { SignupPage } from '../signup/signup';
 import { InVisumSignupPage } from '../in-visum-signup/in-visum-signup';
 import { FakeUser } from '../../providers/user';
 

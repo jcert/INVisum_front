@@ -7,11 +7,7 @@ import { FakeUser } from '../providers/user';
 
 import { FirstRunPage } from '../pages/pages';
 import { InVisumWelcomePage } from '../pages/in-visum-welcome/in-visum-welcome';
-import { InVisumLoginPage } from '../pages/in-visum-login/in-visum-login';
 import { InVisumFAQPage } from '../pages/in-visum-faq/in-visum-faq';
-import { InVisumLegalPage } from '../pages/in-visum-legal/in-visum-legal';
-import { InVisumApiPage } from '../pages/in-visum-api/in-visum-api';
-import { InVisumSignupPage } from '../pages/in-visum-signup/in-visum-signup';
 import { SearchPage } from '../pages/search/search';
 
 import { TranslateService } from 'ng2-translate/ng2-translate';
@@ -33,7 +29,9 @@ import { TranslateService } from 'ng2-translate/ng2-translate';
         <button menuClose ion-item (click)="startingPage()">
           Home
         </button>
-        
+        <button menuClose ion-item (click)="logout()">
+          Logout
+        </button>
       </ion-list>
     </ion-content>
 
@@ -66,6 +64,9 @@ export class MyApp {
       StatusBar.styleDefault();
       Splashscreen.hide();
     });
+  }
+  logout() {
+    this.fu.logout();
   }
   is_logged() {
     return this.fu.is_logged();
