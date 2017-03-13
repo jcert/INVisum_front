@@ -27,12 +27,14 @@ import { InVisumLegalPage } from '../pages/in-visum-legal/in-visum-legal';
 import { InVisumApiPage } from '../pages/in-visum-api/in-visum-api';
 import { InVisumSignupPage } from '../pages/in-visum-signup/in-visum-signup';
 import { InVisumProfilePage } from '../pages/in-visum-profile/in-visum-profile';
+import { InVisumSearchPage } from '../pages/in-visum-search/in-visum-search';
 
 
 import { User, FakeUser } from '../providers/user';
 import { Api } from '../providers/api';
 import { Settings } from '../providers/settings';
 import { Items } from '../mocks/providers/items';
+import { FakeItems } from '../mocks/providers/fake-items';
 
 import { TranslateModule, TranslateLoader, TranslateStaticLoader } from 'ng2-translate/ng2-translate';
 
@@ -82,6 +84,7 @@ let pages = [
   InVisumWelcomePage,
   InVisumLoginPage,
   InVisumFAQPage,
+  InVisumSearchPage,
   InVisumLegalPage,
   InVisumApiPage,
   InVisumSignupPage,
@@ -103,6 +106,7 @@ export function providers() {
     FakeUser,
     User,
     Api,
+    FakeItems,
     Items,
 
     { provide: Settings, useFactory: provideSettings, deps: [ Storage ] },
