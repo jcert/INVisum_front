@@ -3,7 +3,7 @@ import { Component } from '@angular/core';
 import { NavController, MenuController } from 'ionic-angular';
 
 import { InVisumLoginPage } from '../in-visum-login/in-visum-login';
-import { SearchPage } from '../search/search';
+import { InVisumSearchPage } from '../in-visum-search/in-visum-search';
 import { InVisumFAQPage } from '../in-visum-faq/in-visum-faq';
 import { InVisumLegalPage } from '../in-visum-legal/in-visum-legal';
 import { InVisumApiPage } from '../in-visum-api/in-visum-api';
@@ -51,7 +51,7 @@ export class InVisumWelcomePage {
   }
 
   busca() {
-    this.navCtrl.push(SearchPage);
+    this.navCtrl.push(InVisumSearchPage);
   }
   
   faq() {
