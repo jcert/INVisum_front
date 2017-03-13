@@ -28,6 +28,7 @@ import { InVisumApiPage } from '../pages/in-visum-api/in-visum-api';
 import { InVisumSignupPage } from '../pages/in-visum-signup/in-visum-signup';
 import { InVisumProfilePage } from '../pages/in-visum-profile/in-visum-profile';
 import { InVisumSearchPage } from '../pages/in-visum-search/in-visum-search';
+import { InVisumSearchResultPage } from '../pages/in-visum-search-result/in-visum-search-result';
 
 
 import { User, FakeUser } from '../providers/user';
@@ -85,6 +86,7 @@ let pages = [
   InVisumLoginPage,
   InVisumFAQPage,
   InVisumSearchPage,
+  InVisumSearchResultPage,
   InVisumLegalPage,
   InVisumApiPage,
   InVisumSignupPage,

@@ -11,6 +11,8 @@ export class InVisumSearchResultPage {
   item: any;
 
   constructor(public navCtrl: NavController, navParams: NavParams, items: Items) {
+    
+    console.log("opopopo");
     this.item = navParams.get('item') || items.defaultItem;
   }
 

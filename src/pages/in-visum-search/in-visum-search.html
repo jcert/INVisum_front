@@ -17,7 +17,7 @@
       </ion-item>
 
       <ion-card-content>
-        <p (click)="openItem(item)">{{ item.description }}</p>
+        <p (click)="openItem(item)">{{ shorten(item.description) }}</p>
         <ion-item>
           <ion-icon name="add-circle" item-left></ion-icon>
           <p>{{ item.uploader }}</p>
