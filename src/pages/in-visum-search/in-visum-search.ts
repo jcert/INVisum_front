@@ -1,8 +1,9 @@
 import { Component } from '@angular/core';
 import { NavController, NavParams } from 'ionic-angular';
 
-import { ItemDetailPage } from '../item-detail/item-detail';
+
 import { FakeItems } from '../../providers/providers';
+import { InVisumSearchResultPage } from '../in-visum-search-result/in-visum-search-result';
 import { Item } from '../../models/item';
 
 @Component({
@@ -14,7 +15,7 @@ export class InVisumSearchPage {
 
   constructor(public navCtrl: NavController, public navParams: NavParams, public items: FakeItems) {}
 
-  shorten(x){ return x; }
+  shorten(x){ let max: any = 30; return (x.length > max)? x.substr(0, 60)+"..." : x; }
 
   /**
    * Perform a service for the proper items.
@@ -34,7 +35,7 @@ export class InVisumSearchPage {
    * Navigate to the detail page for this item.
    */
   openItem(item: Item) {
-    this.navCtrl.push(ItemDetailPage, {
+    this.navCtrl.push(InVisumSearchResultPage, {
       item: item
     });
   }
