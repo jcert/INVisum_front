@@ -10,7 +10,8 @@ export class FakeItems {
   defaultItem: any = {
     "name": "Indice de qualidade de gestão",
     "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. In ut metus leo. Ut sit amet metus vulputate, posuere arcu non. ",
-    "uploader": "IRB"
+    "uploader": "IRB",
+    "rating": 70
   };
 
 
@@ -19,42 +20,50 @@ export class FakeItems {
       {
         "name": "Indice de qualidade de gestão",
         "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. In ut metus leo. Ut sit amet metus vulputate, posuere arcu non. ",
-        "uploader": "IRB"
+        "uploader": "IRB",
+        "rating": 90
        },
        { 
         "name": "Dados Econômico-Tributários e Aduaneiros da Receita Federal",
         "description": "Contém diversos tipos de dados relacionados às atividades da receita federal - arrecadação, fiscalização e outros",
-        "uploader": "Receita Federal"
+        "uploader": "Receita Federal",
+        "rating": 80
        },
        {
         "name": "Estatísticas de Comércio Exterior",
         "description": "Contém dados do Ministério da Indústria, Comércio exterior e Serviços",
-        "uploader": "MDIC"
+        "uploader": "MDIC",
+        "rating": 70
        },
        {
         "name": "Cota Parlamentar ",
         "description": "Contém dados sobre projetos legislativos que tramitam ou tramitaram na câmara dos deputados, além de dados sobre licitações",
-        "uploader": "Câmara"
+        "uploader": "Câmara",
+        "rating": 60
        },
        {
         "name": "Autoria e relatoria de matérias",
         "description": "Contém dados sobre projetos legislativos que tramitam ou tramitaram no senado, além de dados sobre licitações",
-        "uploader": "Senado"
+        "uploader": "Senado",
+        "rating": 50
        },
        {
         "name": "Relatorio Estadual",
         "description": "Contém dados sobre o setor de comunicações",
-        "uploader": "MCTI"
+        "uploader": "MCTI",
+        "rating": 40
        },
        {
         "name": "IDA Statement of Credits and Grants",
         "description": "Contém dados econômicos e sociais",
-        "uploader": "World Bank"
+        "uploader": "World Bank",
+        "rating": 30
        },
        {
         "name": "Avaliação de filmes",
         "description": "Contém dados sobre pontuação de filmes",
-        "uploader": "Movielens"
+        "uploader": "Movielens",
+        "rating": 20
        }
      ];
 
