@@ -20,28 +20,5 @@ export class InVisumFAQPage {
   
   }
   
-  ngAfterViewInit() {
-    let ctx = this.canvas.nativeElement;
-    this.myChart = new Chart(ctx, {
-      type: 'pie',
-      data: {
-        labels: ['yolo', 'dolo', 'solo'],
-        datasets: [{
-          data: [300, 50, 100],
-            backgroundColor: [
-                "#FF6384",
-                "#36A2EB",
-                "#FFCE56"
-            ],
-            hoverBackgroundColor: [
-                "#FF6384",
-                "#36A2EB",
-                "#FFCE56"
-            ]
-        }]
-      }
-    });
-  }
-  
 }
 
