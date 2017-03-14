@@ -9,7 +9,6 @@ import { InVisumLegalPage } from '../in-visum-legal/in-visum-legal';
 import { InVisumApiPage } from '../in-visum-api/in-visum-api';
 import { InVisumProfilePage } from '../in-visum-profile/in-visum-profile';
 import { FakeUser } from '../../providers/user';
-import { ReputationIcon } from '../../providers/reputation-icon';
 
 
 /**

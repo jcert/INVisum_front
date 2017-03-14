@@ -10,16 +10,27 @@
 <ion-content>
   <ion-searchbar (ionInput)="getItems($event)" placeholder="{{ 'SEARCH_PLACEHOLDER' | translate }}"></ion-searchbar>
   <ion-list>
+    <div padding>
+      <ion-segment [(ngModel)]="pet">
+        <ion-segment-button (click)="set.remove_all()" value="kittens">
+          Limpar
+        </ion-segment-button>
+        <ion-segment-button value="cubs">
+          Lista {{ set.size() }}
+        </ion-segment-button>
+        <ion-segment-button value="puppies">
+          Trabalhar
+        </ion-segment-button>
+      </ion-segment>
+    </div>
     <ion-card  *ngFor="let item of currentItems">
-      <ion-item>
-        <reputation-icon item-left icon="star" reputation={{item.rating}} ></reputation-icon>
-        <h2>{{ item.name }}</h2>
-      </ion-item>
-
       <ion-card-content>
+        <div><reputation-icon item-left icon="star" reputation={{item.rating}} ></reputation-icon>{{ item.name }}</div>
+      
         <p (click)="openItem(item)">{{ shorten(item.description) }}</p>
         <ion-item>
-          <ion-icon name="add-circle" item-left></ion-icon>
+          <ion-icon *ngIf=" set.exist(item)" name="remove-circle" item-left (click)="set.remove(item)" ></ion-icon>
+          <ion-icon *ngIf="!set.exist(item)" name="add-circle" item-left (click)="set.add(item)" ></ion-icon>
           <p>{{ item.uploader }}</p>
         </ion-item>
       </ion-card-content>

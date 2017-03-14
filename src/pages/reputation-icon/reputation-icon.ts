@@ -6,6 +6,7 @@ import { Component, Input } from '@angular/core';
 //@Injectable()
 @Component({
   selector: 'reputation-icon',
+  styles: [' .icon {font-size: 45px;}'],
   template: '<ion-icon name=\"{{ icon }}\" [ngStyle]=\"{\'color\': color_by_rep(reputation)}\"></ion-icon>' 
 })
 //'<ion-icon name={{ icon }} [style.color]=></ion-icon>'

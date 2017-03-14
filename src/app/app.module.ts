@@ -32,6 +32,7 @@ import { InVisumSearchResultPage } from '../pages/in-visum-search-result/in-visu
 import { ReputationIcon } from '../pages/reputation-icon/reputation-icon';
 
 
+import { SetSelect } from '../providers/set-select';
 import { User, FakeUser } from '../providers/user';
 import { Api } from '../providers/api';
 import { Settings } from '../providers/settings';
@@ -107,6 +108,7 @@ export function providers() {
   return [
     Storage,
     
+    SetSelect,
     FakeUser,
     User,
     Api,
