@@ -10,6 +10,7 @@ import { InVisumApiPage } from '../in-visum-api/in-visum-api';
 import { InVisumProfilePage } from '../in-visum-profile/in-visum-profile';
 import { FakeUser } from '../../providers/user';
 
+
 /**
  * The Welcome Page is a splash page that quickly describes the app,
  * and then directs the user to create an account or log in.
