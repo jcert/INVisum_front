@@ -2,6 +2,7 @@ import { NgModule, ErrorHandler } from '@angular/core';
 import { Http } from '@angular/http';
 import { IonicApp, IonicModule, IonicErrorHandler } from 'ionic-angular';
 import { Storage } from '@ionic/storage';
+import { Ionic2RatingModule } from '../../../ionic2-rating/src';
 
 import { MyApp } from './app.component';
 
@@ -32,6 +33,7 @@ import { InVisumSearchResultPage } from '../pages/in-visum-search-result/in-visu
 import { ReputationIcon } from '../pages/reputation-icon/reputation-icon';
 
 
+import { ApiTalker } from '../providers/api-talker';
 import { SetSelect } from '../providers/set-select';
 import { User, FakeUser } from '../providers/user';
 import { Api } from '../providers/api';
@@ -107,8 +109,8 @@ export function entryComponents() {
 export function providers() {
   return [
     Storage,
-    
     SetSelect,
+    ApiTalker,
     FakeUser,
     User,
     Api,
@@ -125,6 +127,7 @@ export function providers() {
   declarations: declarations(),
   imports: [
     IonicModule.forRoot(MyApp),
+    Ionic2RatingModule,
     TranslateModule.forRoot({
       provide: TranslateLoader,
       useFactory: (createTranslateLoader),

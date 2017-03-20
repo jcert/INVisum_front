@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { NavController, NavParams } from 'ionic-angular';
 
 
-import { FakeItems, SetSelect } from '../../providers/providers';
+import { FakeItems, ApiTalker, SetSelect} from '../../providers/providers';
 import { InVisumSearchResultPage } from '../in-visum-search-result/in-visum-search-result';
 import { Item } from '../../models/item';
 
@@ -13,7 +13,7 @@ import { Item } from '../../models/item';
 export class InVisumSearchPage {
   currentItems: any = [];
 
-  constructor(public navCtrl: NavController, public navParams: NavParams, public items: FakeItems, public set: SetSelect) {}
+  constructor(public navCtrl: NavController, public navParams: NavParams, public items: FakeItems, public api: ApiTalker, public set: SetSelect) {}
 
   shorten(x){ let max: any = 30; return (x.length > max)? x.substr(0, 60)+"..." : x; }
 
@@ -26,7 +26,7 @@ export class InVisumSearchPage {
       this.currentItems = [];
       return;
     }
-    this.currentItems = this.items.query({
+    this.currentItems = this.api.query({
       name: val
     });
   }

@@ -13,6 +13,7 @@
 
   <div class="item-detail" padding>
     <h2>{{item.name}}</h2>
+    <rating [(ngModel)]="rate" nullable="true" nullValue="{{getRating()}}" ></rating>
     <p>{{item.description}}</p>
   </div>
 </ion-content>

@@ -27,7 +27,7 @@
       <ion-card-content>
         <div><reputation-icon item-left icon="star" reputation={{item.rating}} ></reputation-icon>{{ item.name }}</div>
       
-        <p (click)="openItem(item)">{{ shorten(item.description) }}</p>
+        <p (click)="openItem(item)">{{ (item.description) }}</p>
         <ion-item>
           <ion-icon *ngIf=" set.exist(item)" name="remove-circle" item-left (click)="set.remove(item)" ></ion-icon>
           <ion-icon *ngIf="!set.exist(item)" name="add-circle" item-left (click)="set.add(item)" ></ion-icon>

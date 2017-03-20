@@ -5,6 +5,7 @@ import { StatusBar, Splashscreen } from 'ionic-native';
 import { Settings } from '../providers/providers';
 import { FakeUser } from '../providers/user';
 
+import { InVisumLoginPage } from '../pages/in-visum-login/in-visum-login';
 import { FirstRunPage } from '../pages/pages';
 import { InVisumWelcomePage } from '../pages/in-visum-welcome/in-visum-welcome';
 import { InVisumFAQPage } from '../pages/in-visum-faq/in-visum-faq';
@@ -13,7 +14,8 @@ import { InVisumSearchPage } from '../pages/in-visum-search/in-visum-search';
 import { TranslateService } from 'ng2-translate/ng2-translate';
 
 @Component({
-  template: `<ion-menu *ngIf="is_logged()" [content]="content">
+  template: `
+  <ion-menu *ngIf="is_logged()" [content]="content">      
     <!--
     <ion-header>
       <ion-toolbar>
@@ -34,12 +36,18 @@ import { TranslateService } from 'ng2-translate/ng2-translate';
         </button>
       </ion-list>
     </ion-content>
-
   </ion-menu>
-  <ion-nav #content [root]="rootPage"></ion-nav>`
+  
+  
+  <ion-nav  #content [root]="rootPage">
+    <ion-navbar>
+      <ion-title>Login</ion-title>
+    </ion-navbar>
+  </ion-nav>`
 })
 export class MyApp {
   rootPage = FirstRunPage;
+  mustLogout: boolean = false;
 
   @ViewChild(Nav) nav: Nav;
 
@@ -65,8 +73,12 @@ export class MyApp {
       Splashscreen.hide();
     });
   }
+  ionViewWillUnload() {
+    if(this.mustLogout) this.fu.logout();
+  }
   logout() {
-    this.fu.logout();
+    this.mustLogout = true;
+    this.nav.setRoot(InVisumWelcomePage);
   }
   is_logged() {
     return this.fu.is_logged();
