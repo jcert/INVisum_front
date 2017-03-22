@@ -5,7 +5,7 @@ import { StatusBar, Splashscreen } from 'ionic-native';
 import { Settings } from '../providers/providers';
 import { FakeUser } from '../providers/user';
 
-import { InVisumLoginPage } from '../pages/in-visum-login/in-visum-login';
+
 import { FirstRunPage } from '../pages/pages';
 import { InVisumWelcomePage } from '../pages/in-visum-welcome/in-visum-welcome';
 import { InVisumFAQPage } from '../pages/in-visum-faq/in-visum-faq';
