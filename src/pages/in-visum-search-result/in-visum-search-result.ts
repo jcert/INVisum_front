@@ -1,9 +1,6 @@
 import { Component } from '@angular/core';
 import { NavController, NavParams } from 'ionic-angular';
-import { Ionic2RatingModule, Ionic2Rating } from '../../../../ionic2-rating/src';
 
-
-import { Items } from '../../providers/providers';
 
 @Component({
   selector: 'page-in-visum-search-result',
@@ -12,15 +9,14 @@ import { Items } from '../../providers/providers';
 export class InVisumSearchResultPage {
   item: any;
   _hasRating : any = false ;
-  constructor(public navCtrl: NavController, navParams: NavParams, items: Items) {
+  constructor(public navCtrl: NavController, navParams: NavParams) {
     
-    console.log("opopopo");
-    this.item = navParams.get('item') || items.defaultItem;
-    //this.rate = ; //this.item.rating;
+    this.item = navParams.get('item');
+    console.log(this.item.rating);
   }
   
   getRating() {
-    return Math.round(this.item.rating*5.0/100.0);
+    return Math.round(this.item.rating.average*5.0/100.0);
   }
 
 }

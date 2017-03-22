@@ -25,13 +25,13 @@
     </div>
     <ion-card  *ngFor="let item of currentItems">
       <ion-card-content>
-        <div><reputation-icon item-left icon="star" reputation={{item.rating}} ></reputation-icon>{{ item.name }}</div>
+        <div><reputation-icon item-left icon="star" reputation={{item.rating}} ></reputation-icon>{{ item.title }}</div>
       
-        <p (click)="openItem(item)">{{ (item.description) }}</p>
+        <p (click)="openItem(item)">{{ (item.about) }}</p>
         <ion-item>
           <ion-icon *ngIf=" set.exist(item)" name="remove-circle" item-left (click)="set.remove(item)" ></ion-icon>
           <ion-icon *ngIf="!set.exist(item)" name="add-circle" item-left (click)="set.add(item)" ></ion-icon>
-          <p>{{ item.uploader }}</p>
+          <p>{{ item.owner }}</p>
         </ion-item>
       </ion-card-content>
 

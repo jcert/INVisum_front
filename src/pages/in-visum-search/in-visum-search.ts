@@ -4,14 +4,17 @@ import { NavController, NavParams } from 'ionic-angular';
 
 import { FakeItems, ApiTalker, SetSelect} from '../../providers/providers';
 import { InVisumSearchResultPage } from '../in-visum-search-result/in-visum-search-result';
-import { Item } from '../../models/item';
+import { Dataset } from '../../models/dataset';
+
 
 @Component({
   selector: 'page-in-visum-search',
   templateUrl: 'in-visum-search.html'
 })
 export class InVisumSearchPage {
-  currentItems: any = [];
+  currentItems: Dataset[] = [];
+  errorString: string;
+
 
   constructor(public navCtrl: NavController, public navParams: NavParams, public items: FakeItems, public api: ApiTalker, public set: SetSelect) {}
 
@@ -26,15 +29,17 @@ export class InVisumSearchPage {
       this.currentItems = [];
       return;
     }
-    this.currentItems = this.api.query({
-      name: val
-    });
+    this.api.query({name: val}).subscribe(
+                                  resp  => {this.currentItems = resp;console.log(resp)},
+                                  error => this.errorString =  <any> error
+                                );
+  
   }
 
   /**
    * Navigate to the detail page for this item.
    */
-  openItem(item: Item) {
+  openItem(item: Dataset) {
     this.navCtrl.push(InVisumSearchResultPage, {
       item: item
     });

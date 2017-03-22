@@ -1,7 +1,7 @@
 <ion-header>
 
   <ion-navbar>
-    <ion-title>{{ item.name }}</ion-title>
+    <ion-title>{{ item.title }}</ion-title>
   </ion-navbar>
 
 </ion-header>
@@ -12,8 +12,8 @@
   </div>
 
   <div class="item-detail" padding>
-    <h2>{{item.name}}</h2>
+    <h2>{{item.title}}</h2>
     <rating [(ngModel)]="rate" nullable="true" nullValue="{{getRating()}}" ></rating>
-    <p>{{item.description}}</p>
+    <p>{{item.about}}</p>
   </div>
 </ion-content>
