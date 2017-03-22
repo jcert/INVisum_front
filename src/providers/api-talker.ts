@@ -1,5 +1,7 @@
 import { Injectable } from '@angular/core';
-import { Http, RequestOptions, URLSearchParams, Response } from '@angular/http';
+import { Http, RequestOptions, Response } from '@angular/http';
+import { Observable} from 'rxjs/Observable';
+import 'rxjs/Rx';
 import 'rxjs/add/operator/map';
 
 /**
@@ -50,10 +52,14 @@ export class ApiTalker {
   }
   
   query(val: any) {
-    console.log(this.url + "search/title/" + val.name);
-    var obj = []; 
-    this.http.get(this.url + "search/title/" + val.name).map( (resp:Response) => (resp.json()) ).subscribe( res => obj.push(res) );
-    console.log(obj);
-    return obj;
+    return this.http.get(this.url + "search/title/" + val.name + "/")
+                  .map( resp => resp.json())
+                  .catch(this.handleError);
+  }
+  
+  private handleError (error: Response) {
+    console.error(error);
+    console.log("my error");
+    return Observable.throw(error.json().error || "server error");
   }
 }
