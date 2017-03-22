@@ -1,0 +1,27 @@
+<ion-header>
+
+  <ion-navbar>
+    <ion-title>Lista de datasets</ion-title>
+  </ion-navbar>
+
+</ion-header>
+
+
+<ion-content>
+  <ion-list>
+    <ion-card  *ngFor="let item of currentItems">
+      <ion-card-content>
+        <div><reputation-icon item-left icon="star" reputation={{item.rating}} ></reputation-icon>{{ item.title }}</div>
+      
+        <p (click)="openItem(item)">{{ (item.about) }}</p>
+        <ion-item>
+          <ion-icon *ngIf=" set.exist(item)" name="remove-circle" item-left (click)="set.remove(item)" ></ion-icon>
+          <ion-icon *ngIf="!set.exist(item)" name="add-circle" item-left (click)="set.add(item)" ></ion-icon>
+          <p>{{ item.owner }}</p>
+        </ion-item>
+      </ion-card-content>
+
+
+    </ion-card>
+  </ion-list>
+</ion-content>
