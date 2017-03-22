@@ -29,6 +29,7 @@ import { InVisumApiPage } from '../pages/in-visum-api/in-visum-api';
 import { InVisumSignupPage } from '../pages/in-visum-signup/in-visum-signup';
 import { InVisumProfilePage } from '../pages/in-visum-profile/in-visum-profile';
 import { InVisumSearchPage } from '../pages/in-visum-search/in-visum-search';
+import { InVisumSearchListPage } from '../pages/in-visum-search-list/in-visum-search-list';
 import { InVisumSearchResultPage } from '../pages/in-visum-search-result/in-visum-search-result';
 import { ReputationIcon } from '../pages/reputation-icon/reputation-icon';
 
@@ -95,6 +96,7 @@ let pages = [
   InVisumApiPage,
   InVisumSignupPage,
   InVisumProfilePage,
+  InVisumSearchListPage,
   ReputationIcon
 ];
 
