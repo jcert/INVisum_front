@@ -4,6 +4,7 @@ import { NavController, NavParams } from 'ionic-angular';
 
 import { FakeItems, ApiTalker, SetSelect} from '../../providers/providers';
 import { InVisumSearchResultPage } from '../in-visum-search-result/in-visum-search-result';
+import { InVisumSearchListPage } from '../in-visum-search-list/in-visum-search-list';
 import { Dataset } from '../../models/dataset';
 
 
@@ -18,7 +19,7 @@ export class InVisumSearchPage {
 
   constructor(public navCtrl: NavController, public navParams: NavParams, public items: FakeItems, public api: ApiTalker, public set: SetSelect) {}
 
-  shorten(x){ let max: any = 30; return (x.length > max)? x.substr(0, 60)+"..." : x; }
+  shorten(x){ let max: any = 60; return (x.length > max)? x.substr(0, max-3)+"..." : x; }
 
   /**
    * Perform a service for the proper items.
@@ -42,6 +43,12 @@ export class InVisumSearchPage {
   openItem(item: Dataset) {
     this.navCtrl.push(InVisumSearchResultPage, {
       item: item
+    });
+  }
+  
+  workList(){
+    this.navCtrl.push(InVisumSearchListPage, {
+      set: this.set
     });
   }
 
