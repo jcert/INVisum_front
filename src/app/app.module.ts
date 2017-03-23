@@ -31,6 +31,7 @@ import { InVisumProfilePage } from '../pages/in-visum-profile/in-visum-profile';
 import { InVisumSearchPage } from '../pages/in-visum-search/in-visum-search';
 import { InVisumSearchListPage } from '../pages/in-visum-search-list/in-visum-search-list';
 import { InVisumSearchResultPage } from '../pages/in-visum-search-result/in-visum-search-result';
+import { InVisumOperatePage } from '../pages/in-visum-operate/in-visum-operate';
 import { ReputationIcon } from '../pages/reputation-icon/reputation-icon';
 
 
@@ -97,6 +98,7 @@ let pages = [
   InVisumSignupPage,
   InVisumProfilePage,
   InVisumSearchListPage,
+  InVisumOperatePage,
   ReputationIcon
 ];
 

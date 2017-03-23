@@ -1,0 +1,14 @@
+<ion-header>
+
+  <ion-navbar>
+    <ion-title>operar</ion-title>
+  </ion-navbar>
+
+</ion-header>
+
+
+<ion-content>
+
+    <button ion-button block color="light" (click)="presentActionSheet()" > {{ (buttonOperation.chosen)?buttonOperation.op.chosenName:buttonOperation.standardName }} </button>
+    <button *ngFor="let field of buttonOperation.op.args" ion-button block color="light"> {{field[0]}} </button>
+</ion-content>

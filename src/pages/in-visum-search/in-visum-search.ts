@@ -5,6 +5,7 @@ import { NavController, NavParams } from 'ionic-angular';
 import { FakeItems, ApiTalker, SetSelect} from '../../providers/providers';
 import { InVisumSearchResultPage } from '../in-visum-search-result/in-visum-search-result';
 import { InVisumSearchListPage } from '../in-visum-search-list/in-visum-search-list';
+import { InVisumOperatePage } from '../in-visum-operate/in-visum-operate';
 import { Dataset } from '../../models/dataset';
 
 
@@ -50,6 +51,10 @@ export class InVisumSearchPage {
     this.navCtrl.push(InVisumSearchListPage, {
       set: this.set
     });
+  }
+  
+  operations() {
+    this.navCtrl.push(InVisumOperatePage);
   }
 
 }
