@@ -1,11 +1,10 @@
 import { Component } from '@angular/core';
 import { NavController, ToastController } from 'ionic-angular';
 
+import { Headers, RequestOptions } from '@angular/http';
 import { TranslateService } from 'ng2-translate/ng2-translate';
-
 import { InVisumWelcomePage } from '../in-visum-welcome/in-visum-welcome';
-import { User } from '../../providers/user';
-import { FakeUser } from '../../providers/user';
+import { User, FakeUser, ApiTalker} from '../../providers/providers';
 
 /*
   Generated class for the Signup page.
@@ -21,6 +20,7 @@ export class InVisumSignupPage {
   // The account fields for the login form.
   // If you're using the username field with or without email, make
   // sure to add it to the type
+  errorString: string;
   account: {name: string, email: string, password: string} = {
     name: 'Test Human',
     email: 'test@example.com',
@@ -34,6 +34,7 @@ export class InVisumSignupPage {
               public user: User,
               public toastCtrl: ToastController,
               public translateService: TranslateService,
+              public api: ApiTalker, 
               public fu : FakeUser) {
 
     this.translateService.get('SIGNUP_ERROR').subscribe((value) => {
@@ -41,7 +42,8 @@ export class InVisumSignupPage {
     })
   }
 
-  doSignup() {  
+  doSignup() {
+    this.api.authenticate(this.account.name,this.account.password);
     this.fu.login('a');
     this.navCtrl.setRoot(InVisumWelcomePage); 
   
