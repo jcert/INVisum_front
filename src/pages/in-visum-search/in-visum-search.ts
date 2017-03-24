@@ -1,7 +1,6 @@
 import { Component } from '@angular/core';
 import { NavController, NavParams } from 'ionic-angular';
 
-
 import { FakeItems, ApiTalker, SetSelect} from '../../providers/providers';
 import { InVisumSearchResultPage } from '../in-visum-search-result/in-visum-search-result';
 import { InVisumSearchListPage } from '../in-visum-search-list/in-visum-search-list';
@@ -31,11 +30,10 @@ export class InVisumSearchPage {
       this.currentItems = [];
       return;
     }
-    this.api.query({name: val}).subscribe(
-                                  resp  => {this.currentItems = resp;console.log(resp)},
-                                  error => this.errorString =  <any> error
-                                );
-  
+    this.api.queryTitle({name: val}).subscribe(
+      resp  => {this.currentItems = resp;console.log(resp)},
+      error => this.errorString =  <any> error
+    );
   }
 
   /**
