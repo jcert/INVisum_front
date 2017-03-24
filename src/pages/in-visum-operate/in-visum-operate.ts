@@ -3,8 +3,6 @@ import { NavController, NavParams, ActionSheetController } from 'ionic-angular';
 
 
 import { FakeItems, ApiTalker, SetSelect} from '../../providers/providers';
-import { InVisumSearchResultPage } from '../in-visum-search-result/in-visum-search-result';
-import { InVisumSearchListPage } from '../in-visum-search-list/in-visum-search-list';
 import { Dataset } from '../../models/dataset';
 
 
@@ -16,99 +14,63 @@ export class InVisumOperatePage {
   currentItems: Dataset[] = [];
   errorString: string;
   opList: any = {
-      Slice  : {chosenName : 'Slice',  args : [['set', null],['cond',null],['condExp',null]]},
-      Sort   : {chosenName : 'Sort',   args : [['set', null],['col' ,null],['cond',null],['condExp',null]]},
-      Filter : {chosenName : 'Filter', args : [['set', null],['col' ,null],['expr',null]]},
-      Merge  : {chosenName : 'Merge',  args : [['set1',null],['set2',null]]},
-      Join   : {chosenName : 'Join',   args : [['set1',null],['set2',null],['col1',null],['col2',null]]}
+      Slice  : {chosenName : 'Slice',  args : [['set', null, "sFs" ] ,['cond',null, (x) => {} ],['condExp',null, (x) => {} ]]},
+      Sort   : {chosenName : 'Sort',   args : [['set', null, "sFs" ] ,['col' ,null, (x) => {} ],['cond',null, (x) => {} ],['condExp',null, (x) => {} ]]},
+      Filter : {chosenName : 'Filter', args : [['set', null, "sFs" ] ,['col' ,null, (x) => {} ],['expr',null, (x) => {} ]]},
+      Merge  : {chosenName : 'Merge',  args : [['set1',null, "sFs" ],['set2',null, "sFs" ]]},
+      Join   : {chosenName : 'Join',   args : [['set1',null, "sFs" ],['set2',null, "sFs" ],['col1',null, (x) => {} ],['col2',null, (x) => {} ]]}
     }
-  buttonOperation: any = {standardName: "operação", op : {}, chosen : false};
-  
+  standardName : string = "operação";
+  chosen : boolean = false;
+  command : any = {op:null,args:{}};
   
   constructor(public navCtrl: NavController, public navParams: NavParams, public items: FakeItems, 
-              public api: ApiTalker, public set: SetSelect, public actionSheetCtrl: ActionSheetController) {
+              public api: ApiTalker, public sets: SetSelect, public actionSheetCtrl: ActionSheetController) {
   }
-
-  presentActionSheet() {
+  
+  
+  functionThatUsesThis(reg:string,op:any) {
+    this[op](reg);
+  }
+  
+  sFs(setField:string) { //funtion to select from sets
+    let makeActionSelectSet = (name:string, field:string) => {
+      return {text: name,
+              handler: () => {console.log(name+' clicked');this.command.args[field]=name;console.log(this.command.args[setField])}
+              };
+    };
+    let result: any = [];
+    
+    for(let set of this.sets.get()) {
+      result.push(makeActionSelectSet(set.title,setField));  
+    }
+    result.push({text: 'Cancelar',role: 'cancel',handler: () => {console.log('Cancelar clicked');}});      
+    
     let actionSheet = this.actionSheetCtrl.create({
-      title: 'Operações possíveis',
-      buttons: [
-        {
-          text: 'Slice',
-          handler: () => {
-            console.log('Slice clicked');
-            this.buttonOperation.op = this.opList.Slice;
-            this.buttonOperation.chosen = true;
-          }
-        },{
-          text: 'Sort',
-          handler: () => {
-            console.log('Sort clicked');
-            this.buttonOperation.op = this.opList.Sort;
-            this.buttonOperation.chosen = true;
-          }
-        },{
-          text: 'Filter',
-          handler: () => {
-            console.log('Filter clicked');
-            this.buttonOperation.op = this.opList.Filter;
-            this.buttonOperation.chosen = true;
-          }
-        },{
-          text: 'Merge',
-          handler: () => {
-            console.log('Merge clicked');
-            this.buttonOperation.op = this.opList.Merge;
-            this.buttonOperation.chosen = true;
-          }
-        },{
-          text: 'Join',
-          handler: () => {
-            console.log('Join clicked');
-            this.buttonOperation.op = this.opList.Join;
-            this.buttonOperation.chosen = true;
-          }
-        },{
-          text: 'Cancelar',
-          role: 'cancel',
-          handler: () => {
-            console.log('Cancelar clicked');
-          }
-        }
-      ]
+      title: 'Conjuntos',
+      buttons: result
     });
     actionSheet.present();
   }
 
-
-  /**
-   * Perform a service for the proper items.
-   */
-  getItems(ev) {
-    let val = ev.target.value;
-    if(!val || !val.trim()) {
-      this.currentItems = [];
-      return;
-    }
-    this.api.query({name: val}).subscribe(
-                                  resp  => {this.currentItems = resp;console.log(resp)},
-                                  error => this.errorString =  <any> error
-                                );
   
+  makeActionSelectOp(name:string) {
+    return {text: name,handler: () => {console.log(name+' clicked');this.command.op=name}};
+  }
+  
+  presentActionSheet() {
+    this.command = {op:null,args:{}};
+    let actionSheet = this.actionSheetCtrl.create({
+      title: 'Operações possíveis',
+      buttons: [
+        this.makeActionSelectOp('Slice'),
+        this.makeActionSelectOp('Sort'),
+        this.makeActionSelectOp('Merge'),
+        this.makeActionSelectOp('Filter'),
+        this.makeActionSelectOp('Join'),
+        {text: 'Cancelar',role: 'cancel',handler: () => {console.log('Cancelar clicked');}}]});
+    actionSheet.present();
   }
 
-  /**
-   * Navigate to the detail page for this item.
-   */
-  openItem(item: Dataset) {
-    this.navCtrl.push(InVisumSearchResultPage, {
-      item: item
-    });
-  }
-  
-  workList() {
-    this.navCtrl.push(InVisumSearchListPage);
-  }
-  
 
 }
