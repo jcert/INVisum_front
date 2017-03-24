@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Http, RequestOptions, Response } from '@angular/http';
+import { Http, RequestOptions, Response, Headers } from '@angular/http';
 import { Observable} from 'rxjs/Observable';
 import 'rxjs/Rx';
 import 'rxjs/add/operator/map';
@@ -7,36 +7,66 @@ import 'rxjs/add/operator/map';
 /**
  * Api is a generic REST Api handler. Set your API url first.
  */
+ 
+import { NgModule} from '@angular/core';
+import { CommonModule }   from '@angular/common';
+import { HttpModule, XSRFStrategy, CookieXSRFStrategy } from '@angular/http';
+
+@NgModule({
+    imports: [
+        CommonModule,
+        HttpModule
+     ],
+    declarations: [ ],
+    exports: [ ],
+    providers: [
+        {
+            provide: XSRFStrategy,
+            useValue: new CookieXSRFStrategy('csrftoken', 'X-CSRFToken')
+        }
+    ]
+})
+ 
+ 
 @Injectable()
 export class ApiTalker {
   url: string = 'http://127.0.0.1:8000/';
+  errorString: string;
+  token: any = '';
 
   constructor(public http: Http) {
   }
 
-
-  get(endpoint: string, params?: any, options?: RequestOptions) {
-/*    if (!options) {
-      options = new RequestOptions();
-    }
-
-    // Support easy query params for GET requests
-    if (params) {
-      let p = new URLSearchParams();
-      for(let k in params) {
-        p.set(k, params[k]);
-      }
-      // Set the search field if we have params and don't already have
-      // a search field set in options.
-      options.search = !options.search && p || options.search;
-    }
-*/
-
-    return this.http.get(this.url + '/' + endpoint, options);
+  
+  getComplete(endpoint: string, params?: any, options?: RequestOptions) {
+    return this.http.get(this.url + endpoint, options);
   }
+  
+  get(what:string) {
+    return this.http.get(this.url + what, this.getRequestOptions())
+                  .map( resp => resp.json())
+                  .catch(this.handleError);
+  }
+  
+  
+  postComplete(endpoint: string, body: any, options?: RequestOptions) {
+    return this.http.post(this.url + endpoint, body, options);
+  }
+  
+  authenticate(user:string, pass:string) {
+    let x = new RequestOptions(new Headers({"Referer":this.url+"authentication/login/"}));
+    this.getComplete('authentication/login/', new RequestOptions(x)).subscribe(
+      resp  => console.log(resp),
+      error => this.errorString =  <any> error
+      );
+    //name='csrfmiddlewaretoken' value='Zi937Fv7UzCwHAIwsWIIVyIm7oaM9xTHdIcfUgvmGoSCLHT9HCflj6J2HbuApKzl'  
+  }
+  
 
-  post(endpoint: string, body: any, options?: RequestOptions) {
-    return this.http.post(this.url + '/' + endpoint, body, options);
+  post(what:string, options?: RequestOptions) {
+    return this.http.get(this.url + what, options)
+                  .map( resp => resp.json())
+                  .catch(this.handleError);
   }
 
   put(endpoint: string, body: any, options?: RequestOptions) {
@@ -51,10 +81,31 @@ export class ApiTalker {
     return this.http.put(this.url + '/' + endpoint, body, options);
   }
   
-  query(val: any) {
+  queryFeatured() {
+    return this.http.get(this.url + "discover/", this.getRequestOptions())
+                  .map( resp => resp.json())
+                  .catch(this.handleError);
+  }
+  
+  queryTitle(val: any) {
     return this.http.get(this.url + "search/title/" + val.name + "/")
                   .map( resp => resp.json())
                   .catch(this.handleError);
+  }
+  
+  public setToken(x:any) {
+    // todo: some logic to retrieve the cookie here. we're in a service, so you can inject anything you'd like for this
+    this.token = x;
+  }
+  
+  private get xsrfToken() {
+    // todo: some logic to retrieve the cookie here. we're in a service, so you can inject anything you'd like for this
+    return this.token;
+  }
+  
+  private getRequestOptions() {
+    const headers = new Headers({'Content-Type': 'application/json', 'X-XSRF-TOKEN': this.xsrfToken});
+    return new RequestOptions({headers: headers});
   }
   
   private handleError (error: Response) {
