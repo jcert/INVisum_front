@@ -8,7 +8,8 @@ import { InVisumFAQPage } from '../in-visum-faq/in-visum-faq';
 import { InVisumLegalPage } from '../in-visum-legal/in-visum-legal';
 import { InVisumApiPage } from '../in-visum-api/in-visum-api';
 import { InVisumProfilePage } from '../in-visum-profile/in-visum-profile';
-import { FakeUser } from '../../providers/user';
+import { Dataset } from '../../models/dataset';
+import { ApiTalker, FakeUser} from '../../providers/providers';
 
 
 /**
@@ -24,12 +25,24 @@ import { FakeUser } from '../../providers/user';
 
 
 export class InVisumWelcomePage {
-
+  currentFeatured: Dataset[] = [];
+  errorString: string;
   news : any[];
   silly_text : string;
-  constructor(public navCtrl: NavController, public menu : MenuController, public fu : FakeUser) {
+  constructor(public navCtrl: NavController, public menu : MenuController, public apiTalk : ApiTalker, public fu : FakeUser) {
     //menu.enable(false);
   }
+  
+  ngOnInit() {
+    this.getItems();  
+  }
+  
+  getItems() {
+    this.apiTalk.queryFeatured().subscribe(
+      resp  => {this.currentFeatured = resp;console.log(resp)},
+      error => this.errorString =  <any> error
+    ); 
+  }                            
 
   login() {
     this.navCtrl.push(InVisumLoginPage);

@@ -17,7 +17,7 @@
     <button *ngIf="  is_logged()" ion-button block (click)="logout()" class="logout">{{ 'Logout' | translate }}</button>
   </div>
   <div padding class="featured-sets" *ngIf="is_logged()">
-    <p class="featured-sets" *ngFor="let i of [1,1,1,1,1,1,1,1,1,1]"  >placeholder for featured dataset cards</p>
+    <p class="featured-sets" *ngFor="let i of currentFeatured"  >placeholder for featured dataset cards</p>
   </div>
 
   <div center class="footer">
@@ -31,4 +31,4 @@
 </ion-content>
 
 
-<ion-nav #mycontent [root]="rootPage">osdadasdsada</ion-nav> 
+<ion-nav #mycontent [root]="rootPage"></ion-nav> 
