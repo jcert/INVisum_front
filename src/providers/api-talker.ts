@@ -32,7 +32,7 @@ import { HttpModule, XSRFStrategy, CookieXSRFStrategy } from '@angular/http';
 export class ApiTalker {
   url: string = 'http://127.0.0.1:8000/';
   errorString: string;
-  token: any = '';
+  csrftoken: any = '';
 
   constructor(public http: Http) {
   }
@@ -53,12 +53,23 @@ export class ApiTalker {
     return this.http.post(this.url + endpoint, body, options);
   }
   
+  getFinalToken(csrfmiddlewaretoken:string,user:string, pass:string) {
+    let x = new RequestOptions({headers:new Headers({'Content-Type': 'application/json'}), withCredentials:true});
+    this.postComplete('authentication/login/','csrfmiddlewaretoken='+csrfmiddlewaretoken+'&username='+user+'&password='+pass,x)
+        .subscribe( resp  => console.log(resp),
+                    error => this.errorString =  <any> error
+                  );
+    //this.postComplete()    
+  } 
+  
   authenticate(user:string, pass:string) {
     let x = new RequestOptions(new Headers({"Referer":this.url+"authentication/login/"}));
     this.getComplete('authentication/login/', new RequestOptions(x)).subscribe(
-      resp  => console.log(resp),
+      resp  => {this.getFinalToken(resp.text().match(/csrfmiddlewaretoken' value='(\S*)'/)[1],user,pass); //this will get the csrfmiddlewaretoken, use to login and get the final one
+       console.log(resp)},
       error => this.errorString =  <any> error
       );
+     
     //name='csrfmiddlewaretoken' value='Zi937Fv7UzCwHAIwsWIIVyIm7oaM9xTHdIcfUgvmGoSCLHT9HCflj6J2HbuApKzl'  
   }
   
@@ -82,7 +93,7 @@ export class ApiTalker {
   }
   
   queryFeatured() {
-    return this.http.get(this.url + "discover/", this.getRequestOptions())
+    return this.http.get(this.url + "discover/",this.getRequestOptions())
                   .map( resp => resp.json())
                   .catch(this.handleError);
   }
@@ -95,16 +106,17 @@ export class ApiTalker {
   
   public setToken(x:any) {
     // todo: some logic to retrieve the cookie here. we're in a service, so you can inject anything you'd like for this
-    this.token = x;
+    this.csrftoken = x;
   }
   
   private get xsrfToken() {
     // todo: some logic to retrieve the cookie here. we're in a service, so you can inject anything you'd like for this
-    return this.token;
+    return this.csrftoken;
   }
   
   private getRequestOptions() {
-    const headers = new Headers({'Content-Type': 'application/json', 'X-XSRF-TOKEN': this.xsrfToken});
+    //'Content-Type': 'application/json', 
+    const headers = new Headers({'X-XSRF-TOKEN': this.xsrfToken});
     return new RequestOptions({headers: headers});
   }
   
