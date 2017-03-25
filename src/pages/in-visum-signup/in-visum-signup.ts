@@ -22,9 +22,9 @@ export class InVisumSignupPage {
   // sure to add it to the type
   errorString: string;
   account: {name: string, email: string, password: string} = {
-    name: 'Test Human',
+    name: 'master',
     email: 'test@example.com',
-    password: 'test'
+    password: 'a12345678'
   };
 
   // Our translated text strings
