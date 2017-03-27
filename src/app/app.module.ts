@@ -3,6 +3,7 @@ import { Http } from '@angular/http';
 import { IonicApp, IonicModule, IonicErrorHandler } from 'ionic-angular';
 import { Storage } from '@ionic/storage';
 import { Ionic2RatingModule } from '../../../ionic2-rating/src';
+import { AuthHttp, AuthConfig } from 'angular2-jwt';
 
 import { MyApp } from './app.component';
 
@@ -35,7 +36,7 @@ import { InVisumOperatePage } from '../pages/in-visum-operate/in-visum-operate';
 import { ReputationIcon } from '../pages/reputation-icon/reputation-icon';
 
 
-import { ApiTalker } from '../providers/api-talker';
+import { ApiTalker, getAuthHttp } from '../providers/api-talker';
 import { SetSelect } from '../providers/set-select';
 import { User, FakeUser } from '../providers/user';
 import { Api } from '../providers/api';
@@ -120,7 +121,7 @@ export function providers() {
     Api,
     FakeItems,
     Items,
-
+    {provide: AuthHttp,useFactory: getAuthHttp,deps: [Http]},
     { provide: Settings, useFactory: provideSettings, deps: [ Storage ] },
     // Keep this to enable Ionic's runtime error handling during development
     { provide: ErrorHandler, useClass: IonicErrorHandler }
