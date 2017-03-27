@@ -3,7 +3,7 @@ import { Http } from '@angular/http';
 import { IonicApp, IonicModule, IonicErrorHandler } from 'ionic-angular';
 import { Storage } from '@ionic/storage';
 import { Ionic2RatingModule } from '../../../ionic2-rating/src';
-import { AuthHttp, AuthConfig } from 'angular2-jwt';
+import { AuthHttp } from 'angular2-jwt';
 
 import { MyApp } from './app.component';
 

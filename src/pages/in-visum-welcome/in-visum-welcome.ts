@@ -47,7 +47,7 @@ export class InVisumWelcomePage {
   }                            
 
   login() {
-    this.navCtrl.push(InVisumLoginPage);
+    this.navCtrl.setRoot(InVisumLoginPage);
   }
   
   is_logged() {
@@ -55,7 +55,8 @@ export class InVisumWelcomePage {
   }
   
   logout() {
-    this.fu.logout();
+    this.apiTalk.logout();
+    this.login();
   }
 
   historico() {
