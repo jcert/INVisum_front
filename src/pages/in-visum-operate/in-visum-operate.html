@@ -7,9 +7,14 @@
 </ion-header>
 
 
-<ion-content>
-
-    <button ion-button block color="light" (click)="presentActionSheet()" > {{ (command.op)?command.op:standardName }} </button>
-    
-    <button *ngFor="let field of opList[command.op]?.args" ion-button block color="dark" (click)="functionThatUsesThis(field[0],field[2])"> {{ command.args[field[0]] || field[0] }} </button>
+<ion-content  >
+  <ion-list >
+    <ion-item  >
+      <ion-select padding-horizontal placeholder="standardName" [(ngModel)]="gaming">
+        <ion-option padding-horizontal *ngFor="let key of opKeys" value="{{ key }}">{{ key }}</ion-option>
+      </ion-select>
+    </ion-item>
+  </ion-list>
+    <button *ngFor="let field of opList[command.op]?.args" ion-button block color="dark" (click)="functionThatUsesThis(field[0],field[1])"> {{ command.args[field[0]] || field[0] }} </button>
+    <button *ngIf="false"></button>
 </ion-content>
