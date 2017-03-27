@@ -50,6 +50,10 @@ export class ApiTalker {
     return this.authHttp.get(this.url+'discover/',y).map( resp => resp.json()).catch(this.handleError);
   }
   
+  logout() {
+    this.token = '';
+  }
+  
   authenticated() {
     return this.token != '';
   }
