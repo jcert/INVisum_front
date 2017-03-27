@@ -5,6 +5,7 @@ import { Headers, RequestOptions } from '@angular/http';
 import { TranslateService } from 'ng2-translate/ng2-translate';
 import { InVisumWelcomePage } from '../in-visum-welcome/in-visum-welcome';
 import { User, FakeUser, ApiTalker} from '../../providers/providers';
+import { Observable} from 'rxjs/Observable';
 
 /*
   Generated class for the Signup page.
@@ -44,9 +45,7 @@ export class InVisumSignupPage {
 
   doSignup() {
     this.api.authenticate(this.account.name,this.account.password);
-    this.fu.login('a');
-    this.navCtrl.setRoot(InVisumWelcomePage); 
-  
+    Observable.timer(100).subscribe(() => {console.log('observable signup');this.navCtrl.setRoot(InVisumWelcomePage)}); // async operation
     // Attempt to login in through our User service
     /*
     this.user.signup(this.account).subscribe((resp) => {

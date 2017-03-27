@@ -34,14 +34,16 @@ export class InVisumWelcomePage {
   }
   
   ngOnInit() {
-    this.getItems();  
+    if(this.is_logged()) {
+      this.getItems();
+    }  
   }
   
   getItems() {
-    this.apiTalk.queryFeatured().subscribe(
-      resp  => {this.currentFeatured = resp;console.log(resp)},
+    this.apiTalk.getFeatured().subscribe(
+      resp  => {this.currentFeatured = resp},
       error => this.errorString =  <any> error
-    ); 
+    );
   }                            
 
   login() {
@@ -49,7 +51,7 @@ export class InVisumWelcomePage {
   }
   
   is_logged() {
-    return this.fu.is_logged();
+    return this.apiTalk.authenticated();
   }
   
   logout() {
