@@ -46,13 +46,11 @@ export class InVisumSearchPage {
   }
   
   workList(){
-    this.navCtrl.push(InVisumSearchListPage, {
-      set: this.set
-    });
+    this.navCtrl.push(InVisumSearchListPage, {set: this.set});
   }
   
   operations() {
-    this.navCtrl.push(InVisumOperatePage);
+    if(this.currentItems.length>0) this.navCtrl.push(InVisumOperatePage);
   }
 
 }

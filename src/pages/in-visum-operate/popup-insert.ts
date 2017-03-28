@@ -8,8 +8,8 @@ import { MakeOperation} from '../../providers/providers';
   template: `
     <ion-list>
       <ion-list-header>{{title}}</ion-list-header>
-      <ion-input [(ngModel)]="input" type="number" value=""></ion-input>
-      <button ion-button (click)="close()"></button>
+      <ion-input [(ngModel)]="input" type="number" placeholder="Valor" value=""></ion-input>
+      <button ion-button block (click)="close()">Usar</button>
     </ion-list>
   `
 })
