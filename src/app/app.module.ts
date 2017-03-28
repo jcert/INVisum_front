@@ -33,14 +33,16 @@ import { InVisumSearchPage } from '../pages/in-visum-search/in-visum-search';
 import { InVisumSearchListPage } from '../pages/in-visum-search-list/in-visum-search-list';
 import { InVisumSearchResultPage } from '../pages/in-visum-search-result/in-visum-search-result';
 import { InVisumOperatePage } from '../pages/in-visum-operate/in-visum-operate';
+import { PopupSelectPage } from '../pages/in-visum-operate/popup-select';
+import { PopupInsertPage } from '../pages/in-visum-operate/popup-insert';
 import { ReputationIcon } from '../pages/reputation-icon/reputation-icon';
-
 
 import { ApiTalker, getAuthHttp } from '../providers/api-talker';
 import { SetSelect } from '../providers/set-select';
 import { User, FakeUser } from '../providers/user';
 import { Api } from '../providers/api';
 import { Settings } from '../providers/settings';
+import { MakeOperation } from '../providers/make-operation';
 import { Items } from '../mocks/providers/items';
 import { FakeItems } from '../mocks/providers/fake-items';
 
@@ -100,7 +102,9 @@ let pages = [
   InVisumProfilePage,
   InVisumSearchListPage,
   InVisumOperatePage,
-  ReputationIcon
+  ReputationIcon,
+  PopupSelectPage,
+  PopupInsertPage
 ];
 
 export function declarations() {
@@ -116,6 +120,7 @@ export function providers() {
     Storage,
     SetSelect,
     ApiTalker,
+    MakeOperation,
     FakeUser,
     User,
     Api,

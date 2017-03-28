@@ -41,7 +41,7 @@ export class InVisumWelcomePage {
   
   getItems() {
     this.apiTalk.getFeatured().subscribe(
-      resp  => {this.currentFeatured = resp},
+      resp  => {this.currentFeatured = resp, console.log(resp)},
       error => this.errorString =  <any> error
     );
   }                            

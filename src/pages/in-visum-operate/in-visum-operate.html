@@ -8,13 +8,29 @@
 
 
 <ion-content>
-  <ion-list padding>
-    <ion-item padding>
-      <ion-select placeholder="standardName" [(ngModel)]="gaming">
-        <ion-option *ngFor="let key of opKeys" value="{{ key }}">{{ key }}</ion-option>
-      </ion-select>
-    </ion-item>
-  </ion-list>
-    <button *ngFor="let field of opList[command.op]?.args" ion-button block color="dark" (click)="functionThatUsesThis(field[0],field[1])"> {{ command.args[field[0]] || field[0] }} </button>
-    <button *ngIf="false"></button>
+
+  <button ion-button block (click)="selectOp(standardName,opList)" >  {{mOp.get()[standardName]||standardName}}</button>
+  <button ion-button block color="dark" *ngFor="let field of opList[mOp.get()[standardName]]?.args" (click)="functionThatUsesThis(field)"> {{mOp.get()[field[0]]||field[0]}} </button>
+  <ion-fab middle right edge>
+    <button ion-fab mini><ion-icon name="md-arrow-dropdown-circle"></ion-icon></button>
+    <ion-fab-list side="left">
+      <button ion-fab color="secondary"><ion-icon name="md-build"></ion-icon></button>
+      <button ion-fab color="{{(mOp.isComplete())?'secondary':'dark'}}"><ion-icon name="add"></ion-icon></button>
+      <button ion-fab color="danger"><ion-icon name="md-trash"></ion-icon></button>
+    </ion-fab-list>
+  </ion-fab>
+  <div padding class="operations-stack">
+    <ion-card  *ngFor="let item of mOp.getStack()">
+      <ion-card-content>
+        <div><!--<reputation-icon item-left icon="star" reputation={{item.rating}} ></reputation-icon>-->{{ item.title }}</div>
+        <!--(click)="openItem(item)"-->
+        <p >{{ (item.about) }}</p>
+        <ion-item>
+          <!--<ion-icon *ngIf=" set.exist(item)" name="remove-circle" item-left (click)="set.remove(item)" ></ion-icon>
+          <ion-icon *ngIf="!set.exist(item)" name="add-circle" item-left (click)="set.add(item)" ></ion-icon>-->
+          <p>{{ item.owner }}</p>
+        </ion-item>
+      </ion-card-content>
+    </ion-card>
+  </div>
 </ion-content>
