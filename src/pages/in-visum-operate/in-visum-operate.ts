@@ -20,15 +20,6 @@ export class InVisumOperatePage {
   funcHasSet2: any = () => this.mOp.has('set2');
   
   
-  opList: any = {
-      Slice  : {chosenName : 'Slice',  args : [['set',  "sFset", 'funcTrue' ] ,['cond', 'sFcond', 'funcTrue' ],['condExp', 'inputNumber', 'funcTrue' ]]},//left,right,step
-      Sort   : {chosenName : 'Sort',   args : [['set',  "sFset", 'funcTrue' ] ,['col' , 'sFcol', 'funcHasSet' ],['cond', 'sFcond', 'funcTrue' ],['condExp', 'inputNumber', 'funcTrue' ]]},//
-      Filter : {chosenName : 'Filter', args : [['set',  "sFset", 'funcTrue' ] ,['col' , 'sFcol', 'funcHasSet' ],['expr', 'inputNumber', 'funcTrue' ]]},//
-      Merge  : {chosenName : 'Merge',  args : [['set1', "sFset", 'funcTrue' ],['set2', "sFset", 'funcTrue' ]]},
-      Join   : {chosenName : 'Join',   args : [['set1', "sFset", 'funcTrue' ],['set2', "sFset", 'funcTrue' ],['col1', 'sFcol', 'funcHasSet1' ],['col2', 'sFcol', 'funcHasSet2' ]]}
-    }
-  opKeys: any = Object.keys(this.opList);
-  
   standardName : string = "operação";
   chosen : boolean = false;
   command : any = {op:null,args:{}};
@@ -36,6 +27,14 @@ export class InVisumOperatePage {
   constructor(public navCtrl: NavController, public navParams: NavParams, 
               public items: FakeItems, public api: ApiTalker, public sets: SetSelect, 
               public actionSheetCtrl: ActionSheetController,  public popoverCtrl: PopoverController, public mOp: MakeOperation) {
+  }
+  
+  pushCurrent() {
+    if(this.mOp.isComplete()) {
+      this.mOp.pushStack();
+    }else{
+      //give error or alert  
+    }
   }
   
   getCol(item?:Dataset){
@@ -58,9 +57,14 @@ export class InVisumOperatePage {
   inputNumber(field:string) {
     this.numberPopover(field);
   }
+
+  sFsort(condField:string) { //select for sort
+    let conditions : any = ['maior','menor'];
+    this.listPopover(condField,conditions);
+  }
   
-  sFcond(condField:string) { //select from condition
-    let conditions : any = ['igual','diferente','maior','menor'];
+  sFslice(condField:string) { //select for slice
+    let conditions : any = ['left','right','step'];
     this.listPopover(condField,conditions);
   }
   
@@ -76,14 +80,12 @@ export class InVisumOperatePage {
     let popover = this.popoverCtrl.create(PopupInsertPage,{title:inTitle});
     popover.present();
     console.log(this.mOp.get());
-    //this.navCtrl.push(PopupSelectPage);
   }
 
   listPopover(inTitle,inList) {
     let popover = this.popoverCtrl.create(PopupSelectPage,{title:inTitle,list:inList});
     popover.present();
     console.log(this.mOp.get());
-    //this.navCtrl.push(PopupSelectPage);
   }
   
   selectOp(inTitle,inList) {
