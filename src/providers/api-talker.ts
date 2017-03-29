@@ -31,8 +31,9 @@ export class ApiTalker {
 
   constructor(public authHttp: AuthHttp) {}
 
-  getComplete(endpoint: string, params?: any, options?: RequestOptions) {
-    return this.authHttp.get(this.url + endpoint, options);
+  getComplete(endpoint: string) {
+    let y = new RequestOptions({method:'get',headers:new Headers({'Content-Type': 'application/json','Authorization': 'JWT '+this.token}), withCredentials:true});
+    return this.authHttp.get(this.url + endpoint, y);
   }
   
   get(what:string) {
@@ -41,8 +42,13 @@ export class ApiTalker {
                   .catch(this.handleError);
   }
   
-  postComplete(endpoint: string, body: any, options?: RequestOptions) {
-    return this.authHttp.post(this.url + endpoint, body, options);
+  postComplete(endpoint: string, body: any) {
+    let y = new RequestOptions({method:'post',headers:new Headers({'Content-Type': 'application/json','Authorization': 'JWT '+this.token}), withCredentials:true});
+    return this.authHttp.post(this.url + endpoint, body, y);
+  }
+  deleteComplete(endpoint: string) {
+    let y = new RequestOptions({method:'delete',headers:new Headers({'Content-Type': 'application/json','Authorization': 'JWT '+this.token}), withCredentials:true});
+    return this.authHttp.delete(this.url + endpoint, y);
   }
  
   getFeatured() {

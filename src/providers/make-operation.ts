@@ -5,7 +5,7 @@ export class MakeOperation {
   stack: any  = [];
   opList: any = {
     Slice  : {chosenName : 'Slice',  args : [['set',  "sFset", 'funcTrue' ] ,['cond', 'sFslice', 'funcTrue' ],['condExp', 'inputNumber', 'funcTrue' ]]},//left,right,step
-    Sort   : {chosenName : 'Sort',   args : [['set',  "sFset", 'funcTrue' ] ,['col' , 'sFcol', 'funcHasSet' ],['cond', 'sFsort', 'funcTrue' ],['condExp', 'inputNumber', 'funcTrue' ]]},//
+    Sort   : {chosenName : 'Sort',   args : [['set',  "sFset", 'funcTrue' ] ,['col' , 'sFcol', 'funcHasSet' ],['cond', 'sFsort', 'funcTrue' ]]},//
     Filter : {chosenName : 'Filter', args : [['set',  "sFset", 'funcTrue' ] ,['col' , 'sFcol', 'funcHasSet' ],['expr', 'inputNumber', 'funcTrue' ]]},//
     Merge  : {chosenName : 'Merge',  args : [['set1', "sFset", 'funcTrue' ],['set2', "sFset", 'funcTrue' ]]},
     Join   : {chosenName : 'Join',   args : [['set1', "sFset", 'funcTrue' ],['set2', "sFset", 'funcTrue' ],['col1', 'sFcol', 'funcHasSet1' ],['col2', 'sFcol', 'funcHasSet2' ]]}

@@ -4,15 +4,16 @@ import { FakeItems, ApiTalker, SetSelect, MakeOperation} from '../../providers/p
 import { Dataset } from '../../models/dataset';
 import { PopupSelectPage } from './popup-select';
 import { PopupInsertPage } from './popup-insert';
-
+import 'rxjs/add/operator/map';
+import { Observable} from 'rxjs/Observable';
 
 @Component({
   selector: 'page-in-visum-operate',
   templateUrl: 'in-visum-operate.html'
 })
 export class InVisumOperatePage {
-  currentItems: Dataset[] = [];
   errorString: string;
+  personals: any = [];
   
   funcTrue:    any = () => true;
   funcHasSet:  any = () => this.mOp.has('set');
@@ -27,6 +28,23 @@ export class InVisumOperatePage {
   constructor(public navCtrl: NavController, public navParams: NavParams, 
               public items: FakeItems, public api: ApiTalker, public sets: SetSelect, 
               public actionSheetCtrl: ActionSheetController,  public popoverCtrl: PopoverController, public mOp: MakeOperation) {
+              
+    this.personals = [];
+  }
+  
+  ngOnInit() {//concurrency issues here
+    this.api.getComplete('personal/')
+        .map(x => x.json())
+        .subscribe( res => 
+        {
+          res.map(x => {this.api.deleteComplete('personal/'+x.id+'/').subscribe(res => {})});
+          for(let i of this.sets.get()) {
+            console.log(i);
+            this.api.postComplete('datasets/personal/'+i.id+'/',{}).subscribe( res => {console.log('datasets/personal/'+i.id)}, error => console.log('error'));
+          }
+        }, 
+        error => console.log('error')); 
+    Observable.timer(200).subscribe( x => this.api.getComplete('personal/').map( resp => resp.json()).subscribe( res => {this.personals = res; console.log('filled personals')}, error => console.log('error')));
   }
   
   pushCurrent() {
@@ -50,8 +68,18 @@ export class InVisumOperatePage {
   }
   
   sFcol(colField:string) { //select from column
-    let conditions : any = this.getCol();
-    this.listPopover(colField,conditions);
+    let regexp = colField.match(/col(\d?)/);
+    let reference = (regexp)?'':regexp[1];
+    let y: any;
+    this.api
+        .getComplete('personal/'+this.mOp.get()['set'+reference]+'/meta/')
+        .subscribe( x => 
+        {
+          y = JSON.parse(x.json());
+          console.log(y);
+          let conditions : any = y;
+          this.listPopover(colField,conditions);
+        } );
   }
   
   inputNumber(field:string) {
@@ -70,8 +98,8 @@ export class InVisumOperatePage {
   
   sFset(setField:string) { //funtion to select from sets
     let result: any = [];
-    for(let set of this.sets.get().concat([])) {
-      result.push(set.title);  
+    for(let set of this.personals) {
+      result.push(set.id);  
     }
     this.listPopover(setField,result);
   }
