@@ -9,8 +9,8 @@
 
 <ion-content>
 
-  <button ion-button block (click)="selectOp(standardName,mOp.getOpList())" >  {{mOp.get()[standardName]||standardName}}</button>
-  <button ion-button block color="dark" *ngFor="let field of mOp.getOpList()[mOp.get()[standardName]]?.args" (click)="functionThatUsesThis(field)"> {{mOp.get()[field[0]]||field[0]}} </button>
+  <button ion-button block (click)="selectOp(standardName,mOp.getOpList())" >  {{mOp.getOp()[standardName]||standardName}}</button>
+  <button ion-button block color="dark" *ngFor="let field of mOp.getOpList()[mOp.getOp()[standardName]]?.args" (click)="functionThatUsesThis(field)"> {{mOp.getOp()[field[0]]||field[0]}} </button>
   <ion-fab middle right edge>
     <button ion-fab mini><ion-icon name="md-arrow-dropdown-circle"></ion-icon></button>
     <ion-fab-list side="left">

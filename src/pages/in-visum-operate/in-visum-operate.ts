@@ -1,11 +1,8 @@
 import { Component } from '@angular/core';
 import { NavController, NavParams, ActionSheetController, PopoverController } from 'ionic-angular';
 import { FakeItems, ApiTalker, SetSelect, MakeOperation} from '../../providers/providers';
-import { Dataset } from '../../models/dataset';
 import { PopupSelectPage } from './popup-select';
 import { PopupInsertPage } from './popup-insert';
-import 'rxjs/add/operator/map';
-import { Observable} from 'rxjs/Observable';
 
 @Component({
   selector: 'page-in-visum-operate',
@@ -13,7 +10,6 @@ import { Observable} from 'rxjs/Observable';
 })
 export class InVisumOperatePage {
   errorString: string;
-  personals: any = [];
   
   funcTrue:    any = () => true;
   funcHasSet:  any = () => this.mOp.has('set');
@@ -28,23 +24,10 @@ export class InVisumOperatePage {
   constructor(public navCtrl: NavController, public navParams: NavParams, 
               public items: FakeItems, public api: ApiTalker, public sets: SetSelect, 
               public actionSheetCtrl: ActionSheetController,  public popoverCtrl: PopoverController, public mOp: MakeOperation) {
-              
-    this.personals = [];
   }
   
-  ngOnInit() {//concurrency issues here
-    this.api.getComplete('personal/')
-        .map(x => x.json())
-        .subscribe( res => 
-        {
-          res.map(x => {this.api.deleteComplete('personal/'+x.id+'/').subscribe(res => {})});
-          for(let i of this.sets.get()) {
-            console.log(i);
-            this.api.postComplete('datasets/personal/'+i.id+'/',{}).subscribe( res => {console.log('datasets/personal/'+i.id)}, error => console.log('error'));
-          }
-        }, 
-        error => console.log('error')); 
-    Observable.timer(200).subscribe( x => this.api.getComplete('personal/').map( resp => resp.json()).subscribe( res => {this.personals = res; console.log('filled personals')}, error => console.log('error')));
+  ngOnInit() {
+    this.mOp.prepare();
   }
   
   pushCurrent() {
@@ -55,12 +38,7 @@ export class InVisumOperatePage {
     }
   }
   
-  getCol(item?:Dataset){
-    return [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18];//should return the columns of a given dataset
-  }
-  
   functionThatUsesThis(x:any) {
-    console.log(this[x[2]]());
     if(this[x[2]]())
     {
       this[x[1]](x[0]);
@@ -68,18 +46,16 @@ export class InVisumOperatePage {
   }
   
   sFcol(colField:string) { //select from column
-    let regexp = colField.match(/col(\d?)/);
-    let reference = (regexp)?'':regexp[1];
-    let y: any;
-    this.api
-        .getComplete('personal/'+this.mOp.get()['set'+reference]+'/meta/')
-        .subscribe( x => 
-        {
-          y = JSON.parse(x.json());
-          console.log(y);
-          let conditions : any = y;
-          this.listPopover(colField,conditions);
-        } );
+    let x = colField.match('col(\d?)');
+    console.log('columns in id: ');
+    console.log(this.mOp.getHeaders(this.mOp.getOp()['set'+x[1]]));
+    let y: any = this.mOp.getHeaders(this.mOp.getOp()['set'+x[1]]);
+    console.log('columns: ');
+    console.log(y);
+    //get in y the colums to the input set
+    let conditions : any = y;
+    this.listPopover(colField,conditions);
+    
   }
   
   inputNumber(field:string) {
@@ -97,23 +73,17 @@ export class InVisumOperatePage {
   }
   
   sFset(setField:string) { //funtion to select from sets
-    let result: any = [];
-    for(let set of this.personals) {
-      result.push(set.id);  
-    }
-    this.listPopover(setField,result);
+    this.listPopover(setField,this.mOp.getWorkingSetsKeys());
   }
 
   numberPopover(inTitle) {
     let popover = this.popoverCtrl.create(PopupInsertPage,{title:inTitle});
     popover.present();
-    console.log(this.mOp.get());
   }
 
   listPopover(inTitle,inList) {
     let popover = this.popoverCtrl.create(PopupSelectPage,{title:inTitle,list:inList});
     popover.present();
-    console.log(this.mOp.get());
   }
   
   selectOp(inTitle,inList) {
