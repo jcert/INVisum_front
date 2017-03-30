@@ -130,6 +130,7 @@ export class MakeOperation {
     this.opObj = {};  
   }
   clearStack() {
+    this.clear();
     this.stack = [];  
   }
   getStack() {

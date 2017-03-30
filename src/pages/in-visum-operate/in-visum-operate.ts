@@ -3,6 +3,8 @@ import { NavController, NavParams, ActionSheetController, PopoverController } fr
 import { FakeItems, ApiTalker, SetSelect, MakeOperation} from '../../providers/providers';
 import { PopupSelectPage } from './popup-select';
 import { PopupInsertPage } from './popup-insert';
+import { InVisumPlotConfigPage } from '../in-visum-plot-config/in-visum-plot-config';
+
 
 @Component({
   selector: 'page-in-visum-operate',
