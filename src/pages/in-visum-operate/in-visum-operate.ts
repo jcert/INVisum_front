@@ -1,9 +1,9 @@
 import { Component } from '@angular/core';
-import { NavController, NavParams, ActionSheetController, PopoverController } from 'ionic-angular';
+import { NavController, NavParams, PopoverController } from 'ionic-angular';
 import { FakeItems, ApiTalker, SetSelect, MakeOperation} from '../../providers/providers';
 import { PopupSelectPage } from './popup-select';
 import { PopupInsertPage } from './popup-insert';
-import { InVisumPlotConfigPage } from '../in-visum-plot-config/in-visum-plot-config';
+import { InVisumConfigPlotPage } from '../in-visum-config-plot/in-visum-config-plot';
 
 
 @Component({
@@ -25,7 +25,7 @@ export class InVisumOperatePage {
   
   constructor(public navCtrl: NavController, public navParams: NavParams, 
               public items: FakeItems, public api: ApiTalker, public sets: SetSelect, 
-              public actionSheetCtrl: ActionSheetController,  public popoverCtrl: PopoverController, public mOp: MakeOperation) {
+              public popoverCtrl: PopoverController, public mOp: MakeOperation) {
   }
   
   ngOnInit() {
@@ -86,6 +86,10 @@ export class InVisumOperatePage {
   listPopover(inTitle,inList) {
     let popover = this.popoverCtrl.create(PopupSelectPage,{title:inTitle,list:inList});
     popover.present();
+  }
+  
+  goPlotConfig() {
+    this.navCtrl.push(InVisumConfigPlotPage);
   }
   
   selectOp(inTitle,inList) {

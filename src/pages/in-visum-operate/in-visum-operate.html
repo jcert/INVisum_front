@@ -14,7 +14,7 @@
   <ion-fab middle right edge>
     <button ion-fab mini><ion-icon name="md-arrow-dropdown-circle"></ion-icon></button>
     <ion-fab-list side="left">
-      <button ion-fab color="secondary" ><ion-icon name="md-build"></ion-icon></button>
+      <button ion-fab color="secondary" (click)="goPlotConfig()" ><ion-icon name="md-build" ></ion-icon></button>
       <button ion-fab color="{{(mOp.isComplete())?'secondary':'dark'}}" (click)="pushCurrent()" ><ion-icon name="add"></ion-icon></button>
       <button ion-fab color="danger" (click)="mOp.clearStack()" ><ion-icon name="md-trash"></ion-icon></button>
     </ion-fab-list>
