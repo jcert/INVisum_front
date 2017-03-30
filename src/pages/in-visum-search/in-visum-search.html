@@ -11,14 +11,14 @@
   <ion-searchbar (ionInput)="getItems($event)" placeholder="{{ 'SEARCH_PLACEHOLDER' | translate }}"></ion-searchbar>
   <ion-list>
     <div padding>
-      <ion-segment [(ngModel)]="pet">
-        <ion-segment-button (click)="set.remove_all()" value="kittens">
+      <ion-segment>
+        <ion-segment-button (click)="set.remove_all()">
           Limpar
         </ion-segment-button>
-        <ion-segment-button (click)="workList()" value="cubs">
+        <ion-segment-button (click)="workList()">
           Lista {{ set.size() }}
         </ion-segment-button>
-        <ion-segment-button value="puppies">
+        <ion-segment-button (click)="operations()">
           Trabalhar
         </ion-segment-button>
       </ion-segment>
@@ -34,8 +34,6 @@
           <p>{{ item.owner }}</p>
         </ion-item>
       </ion-card-content>
-
-
     </ion-card>
   </ion-list>
 </ion-content>

@@ -1,10 +1,10 @@
 import { Component } from '@angular/core';
 import { NavController, NavParams } from 'ionic-angular';
 
-
 import { FakeItems, ApiTalker, SetSelect} from '../../providers/providers';
 import { InVisumSearchResultPage } from '../in-visum-search-result/in-visum-search-result';
 import { InVisumSearchListPage } from '../in-visum-search-list/in-visum-search-list';
+import { InVisumOperatePage } from '../in-visum-operate/in-visum-operate';
 import { Dataset } from '../../models/dataset';
 
 
@@ -30,11 +30,10 @@ export class InVisumSearchPage {
       this.currentItems = [];
       return;
     }
-    this.api.query({name: val}).subscribe(
-                                  resp  => {this.currentItems = resp;console.log(resp)},
-                                  error => this.errorString =  <any> error
-                                );
-  
+    this.api.queryTitle({name: val}).subscribe(
+      resp  => {this.currentItems = resp;console.log(resp)},
+      error => this.errorString =  <any> error
+    );
   }
 
   /**
@@ -47,9 +46,11 @@ export class InVisumSearchPage {
   }
   
   workList(){
-    this.navCtrl.push(InVisumSearchListPage, {
-      set: this.set
-    });
+    this.navCtrl.push(InVisumSearchListPage, {set: this.set});
+  }
+  
+  operations() {
+    if(this.currentItems.length>0) this.navCtrl.push(InVisumOperatePage);
   }
 
 }

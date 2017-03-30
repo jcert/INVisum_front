@@ -2,20 +2,20 @@ import { Component, ViewChild } from '@angular/core';
 import {Platform, Nav, Config} from 'ionic-angular';
 import { StatusBar, Splashscreen } from 'ionic-native';
 
-import { Settings } from '../providers/providers';
-import { FakeUser } from '../providers/user';
-
+import { Observable} from 'rxjs/Observable';
+import { ApiTalker, Settings} from '../providers/providers';
 
 import { FirstRunPage } from '../pages/pages';
 import { InVisumWelcomePage } from '../pages/in-visum-welcome/in-visum-welcome';
 import { InVisumFAQPage } from '../pages/in-visum-faq/in-visum-faq';
 import { InVisumSearchPage } from '../pages/in-visum-search/in-visum-search';
+import { InVisumLoginPage } from '../pages/in-visum-login/in-visum-login';
 
 import { TranslateService } from 'ng2-translate/ng2-translate';
 
 @Component({
   template: `
-  <ion-menu *ngIf="is_logged()" [content]="content">      
+  <ion-menu [content]="content">      
     <!--
     <ion-header>
       <ion-toolbar>
@@ -57,7 +57,7 @@ export class MyApp {
     { title: 'Perfil', component: InVisumFAQPage }
   ]
 
-  constructor(translate: TranslateService, platform: Platform, settings: Settings, config: Config, public fu : FakeUser) {
+  constructor(translate: TranslateService, platform: Platform, settings: Settings, config: Config, public apiTalk : ApiTalker) {
     // Set the default language for translation strings, and the current language.
     translate.setDefaultLang('en');
     translate.use('en')
@@ -73,15 +73,12 @@ export class MyApp {
       Splashscreen.hide();
     });
   }
-  ionViewWillUnload() {
-    if(this.mustLogout) this.fu.logout();
-  }
   logout() {
-    this.mustLogout = true;
-    this.nav.setRoot(InVisumWelcomePage);
+    this.nav.setRoot(InVisumLoginPage);
+    Observable.timer(50).subscribe(() => {this.apiTalk.logout()});
   }
   is_logged() {
-    return this.fu.is_logged();
+    return this.apiTalk.authenticated();
   }
   startingPage() {
     this.nav.setRoot(InVisumWelcomePage);

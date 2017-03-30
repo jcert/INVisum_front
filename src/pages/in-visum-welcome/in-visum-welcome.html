@@ -17,7 +17,18 @@
     <button *ngIf="  is_logged()" ion-button block (click)="logout()" class="logout">{{ 'Logout' | translate }}</button>
   </div>
   <div padding class="featured-sets" *ngIf="is_logged()">
-    <p class="featured-sets" *ngFor="let i of [1,1,1,1,1,1,1,1,1,1]"  >placeholder for featured dataset cards</p>
+    <ion-card  *ngFor="let item of currentFeatured">
+      <ion-card-content>
+        <div><!--<reputation-icon item-left icon="star" reputation={{item.rating}} ></reputation-icon>-->{{ item.title }}</div>
+        <!--(click)="openItem(item)"-->
+        <p >{{ (item.about) }}</p>
+        <ion-item>
+          <!--<ion-icon *ngIf=" set.exist(item)" name="remove-circle" item-left (click)="set.remove(item)" ></ion-icon>
+          <ion-icon *ngIf="!set.exist(item)" name="add-circle" item-left (click)="set.add(item)" ></ion-icon>-->
+          <p>{{ item.owner }}</p>
+        </ion-item>
+      </ion-card-content>
+    </ion-card>
   </div>
 
   <div center class="footer">
@@ -31,4 +42,4 @@
 </ion-content>
 
 
-<ion-nav #mycontent [root]="rootPage">osdadasdsada</ion-nav> 
+<ion-nav #mycontent [root]="rootPage"></ion-nav> 

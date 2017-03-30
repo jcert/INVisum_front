@@ -3,6 +3,7 @@ import { Http } from '@angular/http';
 import { IonicApp, IonicModule, IonicErrorHandler } from 'ionic-angular';
 import { Storage } from '@ionic/storage';
 import { Ionic2RatingModule } from '../../../ionic2-rating/src';
+import { AuthHttp } from 'angular2-jwt';
 
 import { MyApp } from './app.component';
 
@@ -31,14 +32,17 @@ import { InVisumProfilePage } from '../pages/in-visum-profile/in-visum-profile';
 import { InVisumSearchPage } from '../pages/in-visum-search/in-visum-search';
 import { InVisumSearchListPage } from '../pages/in-visum-search-list/in-visum-search-list';
 import { InVisumSearchResultPage } from '../pages/in-visum-search-result/in-visum-search-result';
+import { InVisumOperatePage } from '../pages/in-visum-operate/in-visum-operate';
+import { PopupSelectPage } from '../pages/in-visum-operate/popup-select';
+import { PopupInsertPage } from '../pages/in-visum-operate/popup-insert';
 import { ReputationIcon } from '../pages/reputation-icon/reputation-icon';
 
-
-import { ApiTalker } from '../providers/api-talker';
+import { ApiTalker, getAuthHttp } from '../providers/api-talker';
 import { SetSelect } from '../providers/set-select';
 import { User, FakeUser } from '../providers/user';
 import { Api } from '../providers/api';
 import { Settings } from '../providers/settings';
+import { MakeOperation } from '../providers/make-operation';
 import { Items } from '../mocks/providers/items';
 import { FakeItems } from '../mocks/providers/fake-items';
 
@@ -97,7 +101,10 @@ let pages = [
   InVisumSignupPage,
   InVisumProfilePage,
   InVisumSearchListPage,
-  ReputationIcon
+  InVisumOperatePage,
+  ReputationIcon,
+  PopupSelectPage,
+  PopupInsertPage
 ];
 
 export function declarations() {
@@ -113,12 +120,13 @@ export function providers() {
     Storage,
     SetSelect,
     ApiTalker,
+    MakeOperation,
     FakeUser,
     User,
     Api,
     FakeItems,
     Items,
-
+    {provide: AuthHttp,useFactory: getAuthHttp,deps: [Http]},
     { provide: Settings, useFactory: provideSettings, deps: [ Storage ] },
     // Keep this to enable Ionic's runtime error handling during development
     { provide: ErrorHandler, useClass: IonicErrorHandler }
