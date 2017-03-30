@@ -10,13 +10,19 @@ export class PlotHelp {
   sourceDataList: any;
   
   
-  possibleParam: any =['type'];//all other possibilities will be added in the constructor
+  possibleParam: any =['type','set'];//all other possibilities will be added in the constructor
   graphTypeParam: any = {
       'Histogram' :[['values','string'],['label','string'],['agg','string'],['bins','string'],['density','number']],
       'Bar'       :[['values','string'],['label','string']],
       'Line'      :[['x','string'],     ['y','string']],
       'Scatter'   :[['x','string'],     ['y','string']]
       };
+  
+  graphTypeToId(x:string){
+    let translationTable: any = {'Histogram':1,'Bar':2,'Line':3,'Scatter':4};  
+    return null || translationTable[x];
+  }
+      
   graphTypes: any = Object.keys(this.graphTypeParam);
   graphParam: any = [['plot_width','number'],['plot_height','number'],['legend','string']];
   
@@ -38,16 +44,20 @@ export class PlotHelp {
     }
     this.possibleParam = this.possibleParam.concat(res);
   }
-  
+  workingSet() {
+    return null || this.sourceDataList;
+  }
   clearCurrent() {
     this.currentParams = {};
   }
-  
   getBasicParam() {
     return this.graphParam;
   }
   getTypeParam() {
     return null || this.graphTypeParam[this.currentParams.type];
+  }
+  getAllFromCurrent() {
+    return this.currentParams;
   }
   getFromCurrent(x) {
     return null || this.currentParams[x];

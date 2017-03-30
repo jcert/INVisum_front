@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { NavController, PopoverController } from 'ionic-angular';
-import { PlotHelp } from '../../providers/providers';
+import { PlotHelp, ApiTalker } from '../../providers/providers';
 import { PopupSelectTypePage } from './popup-select-type';
 import { PopupInsertTypePage } from './popup-insert-type';
 
@@ -10,21 +10,34 @@ import { PopupInsertTypePage } from './popup-insert-type';
 })
 export class InVisumConfigPlotPage {
   graphTypes: any = ['Histogram','Bar','Line','Scatter'];
-  constructor(public navCtrl: NavController, public pH: PlotHelp, public popoverCtrl: PopoverController) {
+  constructor(public navCtrl: NavController, public pH: PlotHelp, public popoverCtrl: PopoverController, public api: ApiTalker) {
     //MAKE OPERATIONS
     pH.prepare();
   
   
   }
   
+  getWorkingSet() {    
+    let popover = this.popoverCtrl.create(PopupSelectTypePage,{title:'Selecione um Dataset',field:'set',list:this.pH.workingSet(),nameFunct: (x) => x.id});
+    popover.present();
+  }
   getGraphType() {
-    his.pH.clearCurrent();    
+    this.pH.clearCurrent();    
     let popover = this.popoverCtrl.create(PopupSelectTypePage,{title:'Tipos de gráficos',field:'type',list:this.graphTypes});
     popover.present();
   }
-  
   getInput(x) {
     let popover = this.popoverCtrl.create(PopupInsertTypePage,{title:'Entre com um '+x[1],inputType:x[1],field:x[0]});
     popover.present();
+  }
+  createGraph() {
+    let set : any = this.pH.getFromCurrent('set');
+    let typeName: any = this.pH.getFromCurrent('type');
+    if(set&&typeName) {
+      let id: any  = set.id;
+      let typeId: any = this.pH.graphTypeToId(typeName); 
+      console.log(this.pH.getAllFromCurrent());
+      this.api.postComplete('personal/plot/'+typeId+'/'+id+'/', {}).subscribe( res => {});  
+    }
   }
 }
