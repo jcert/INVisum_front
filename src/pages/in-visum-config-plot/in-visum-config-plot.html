@@ -1,0 +1,18 @@
+<ion-header>
+
+  <ion-navbar>
+    <ion-title>Configurar Plot</ion-title>
+  </ion-navbar>
+
+</ion-header>
+
+
+<ion-content>
+
+  <button ion-button block (click)="getGraphType()" >  {{ pH.getFromCurrent('type') || 'selecione o Dataset'}}</button>
+  <button *ngFor="let j of pH.getBasicParam()" ion-button block (click)="getInput(j)" > {{j[0]}} : {{pH.getFromCurrent(j[0])}}</button>  
+  <button *ngFor="let i of pH.getTypeParam()"  ion-button block (click)="getInput(i)" > {{i[0]}} : {{pH.getFromCurrent(i[0])}}</button>
+  <ion-fab middle right edge>
+    <button ion-fab mini><ion-icon name="md-arrow-dropdown-circle"></ion-icon></button><!--Should be accessable if all needed options are ok. Then, make graph and display on screen-->
+  </ion-fab>
+</ion-content>
