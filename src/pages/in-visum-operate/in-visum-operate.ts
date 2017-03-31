@@ -89,6 +89,7 @@ export class InVisumOperatePage {
   }
   
   goPlotConfig() {
+    this.mOp.StackCleaner();
     this.navCtrl.push(InVisumConfigPlotPage);
   }
   

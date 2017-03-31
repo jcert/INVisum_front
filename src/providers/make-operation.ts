@@ -57,6 +57,7 @@ export class MakeOperation {
       delete i.id;
       y[x] = i;
     }
+    this.clearStack();
     Observable.create( (observer) =>
       {
         for(let i of listPersonal) {//concurrency issues here
@@ -95,21 +96,28 @@ export class MakeOperation {
   getWorkingSets() {
     return this.workingSet;
   }
-  
   getHeaders(set) {
     if(this.workingSet[set]) return this.workingSet[set].headers;
     return null;
   }
-  
   clear() {
     this.opObj = {};
+  }
+  clearStack() {
+    this.clear();
+    this.stack = [];  
+  }
+  clearAll() {
+    this.clear();
+    this.index = 0;
+    this.clearStack();
+    this.workingSet = {};
   }
   has(label) {
     return !(this.opObj[label] == null) ;
   }
   pushStack() {
     console.log(this.stack);
-    this.index++;
     switch(this.opObj[this.standardName]) {
       case('Merge'):
       case('Join'):
@@ -125,18 +133,52 @@ export class MakeOperation {
       default:
         this.workingSet['t'+this.index] = this.workingSet[this.opObj.set]; 
     }
-     
     this.stack.push(this.opObj);
-    this.opObj = {};  
-  }
-  clearStack() {
-    this.clear();
-    this.stack = [];  
+    this.opObj = {};
+    this.index++;  
   }
   getStack() {
     return this.stack;
   }
-  
+  StackCleaner() {
+    //first you put in an array just the operations that lead to the very last one made
+    let i: any = [];
+    let f: any = 
+      (index) => {
+        let x: any = this.stack[index];
+        x.index = index;
+        i.push(x);
+        if(x.set) {
+          if(x.set[0]==='t') f(x.set.slice(1));//is it one of the personal sets (copies stright from searchables or saved after operations personal)
+          return;
+        };
+        if(x.set1&&x.set2) {
+          if(x.set1[0]==='t') f(x.set1.slice(1));
+          if(x.set2[0]==='t') f(x.set2.slice(1));
+          return;
+        };
+      };  
+    f(this.stack.length-1);
+    
+    //then, you convert all the tmp names, i.e. t0, t23, t 50, to the personal dataset which must be operated 
+    i = i.reverse();
+    let converter: any = {};
+    for(let y of i) {
+      //substitute their tempSet for the actual one
+      if(y.set) {
+        if(y.set[0]==='t') { y.set = converter[y.set.slice(1)]; converter[y.index] = y.set}
+        else { converter[y.index] = y.set };
+      }
+      if(y.set1&&y.set2) {
+        //don't know how to handles this case yet
+      }
+    }
+    
+    //finally, you must do all the operations before plotting
+    
+    //do op magic
+    console.log(i);    
+  }
   isComplete() {
     let result: boolean = true;
     if(this.has(this.standardName)) {
