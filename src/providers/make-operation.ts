@@ -166,17 +166,19 @@ export class MakeOperation {
     for(let y of i) {
       //substitute their tempSet for the actual one
       if(y.set) {
-        if(y.set[0]==='t') { y.set = converter[y.set.slice(1)]; converter[y.index] = y.set}
-        else { converter[y.index] = y.set };
+        if(y.set[0]==='t') { y.set = converter[y.set.slice(1)]}
+        converter[y.index] = y.set;
       }
       if(y.set1&&y.set2) {
-        //don't know how to handles this case yet
+        if(y.set1[0]==='t') { y.set1 = converter[y.set1.slice(1)]; converter[y.index] = y.set1}
+        if(y.set2[0]==='t') { y.set2 = converter[y.set2.slice(1)]; converter[y.index] = y.set2}
+        converter[y.index] = y.index; //pass onward the temporary name, it will get a real one after the op request is done
       }
     }
     
     //finally, you must do all the operations before plotting
     
-    //do op magic
+    //do op magic, remeber to wait for an op to be done to do another, and do substitute the tmp names when doing 2-set operations
     console.log(i);    
   }
   isComplete() {
