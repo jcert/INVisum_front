@@ -33,11 +33,12 @@ import { InVisumSearchPage } from '../pages/in-visum-search/in-visum-search';
 import { InVisumSearchListPage } from '../pages/in-visum-search-list/in-visum-search-list';
 import { InVisumSearchResultPage } from '../pages/in-visum-search-result/in-visum-search-result';
 import { InVisumOperatePage } from '../pages/in-visum-operate/in-visum-operate';
-import { InVisumConfigPlotPage } from '../pages/in-visum-config-plot/in-visum-config-plot';
+import { InVisumConfigPlotPage, PopupDisplayGraphPage } from '../pages/in-visum-config-plot/in-visum-config-plot';
 import { PopupSelectPage } from '../pages/in-visum-operate/popup-select';
 import { PopupSelectTypePage } from '../pages/in-visum-config-plot/popup-select-type';
 import { PopupInsertTypePage } from '../pages/in-visum-config-plot/popup-insert-type';
 import { PopupInsertPage } from '../pages/in-visum-operate/popup-insert';
+import { PopupStringPage } from '../pages/in-visum-operate/popup-string';
 import { ReputationIcon } from '../pages/reputation-icon/reputation-icon';
 
 import { ApiTalker, getAuthHttp } from '../providers/api-talker';
@@ -111,7 +112,10 @@ let pages = [
   PopupSelectPage,
   PopupSelectTypePage,
   PopupInsertPage,
-  PopupInsertTypePage
+  PopupInsertTypePage,
+  PopupStringPage,
+  
+  PopupDisplayGraphPage
 ];
 
 export function declarations() {

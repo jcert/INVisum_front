@@ -24,8 +24,8 @@ export class PlotHelp {
   }
       
   graphTypes: any = Object.keys(this.graphTypeParam);
-  graphParam: any = [['plot_width','number'],['plot_height','number'],['legend','string']];
-  
+  graphParam: any = [['legend','string']];
+  //['plot_width','number'],['plot_height','number'],  
   currentParams: any = {};
   
   constructor( public api: ApiTalker,  public sets: SetSelect, public mOp: MakeOperation ) {

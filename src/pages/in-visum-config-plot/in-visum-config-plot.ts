@@ -30,6 +30,10 @@ export class InVisumConfigPlotPage {
     let popover = this.popoverCtrl.create(PopupInsertTypePage,{title:'Entre com um '+x[1],inputType:x[1],field:x[0]});
     popover.present();
   }
+  goToGraph(x) {
+    let popover = this.popoverCtrl.create(PopupDisplayGraphPage,{graphId:x});
+    popover.present();
+  }
   createGraph() {
     let set : any = this.pH.getFromCurrent('set');
     let typeName: any = this.pH.getFromCurrent('type');
@@ -37,7 +41,15 @@ export class InVisumConfigPlotPage {
       let id: any  = set.id;
       let typeId: any = this.pH.graphTypeToId(typeName); 
       console.log(this.pH.getAllFromCurrent());
-      this.api.postComplete('personal/plot/'+typeId+'/'+id+'/', {}).subscribe( res => {});  
+      this.api.postComplete('personal/plot/'+typeId+'/'+id+'/', {}).subscribe( res => {this.goToGraph(JSON.parse(res.text()).id)});  
     }
   }
+}
+@Component({
+  selector: 'page-popup-display-graph',
+  template: `<iframe src="{{tmp}}"></iframe>`
+})
+export class PopupDisplayGraphPage {
+  constructor() {}
+
 }
