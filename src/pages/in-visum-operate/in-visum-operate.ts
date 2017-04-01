@@ -3,6 +3,7 @@ import { NavController, NavParams, PopoverController } from 'ionic-angular';
 import { FakeItems, ApiTalker, SetSelect, MakeOperation} from '../../providers/providers';
 import { PopupSelectPage } from './popup-select';
 import { PopupInsertPage } from './popup-insert';
+import { PopupStringPage } from './popup-string';
 import { InVisumConfigPlotPage } from '../in-visum-config-plot/in-visum-config-plot';
 
 
@@ -60,12 +61,16 @@ export class InVisumOperatePage {
     
   }
   
+  inputString(field:string) {
+    this.stringPopover(field);
+  }
+  
   inputNumber(field:string) {
     this.numberPopover(field);
   }
 
   sFsort(condField:string) { //select for sort
-    let conditions : any = ['maior','menor'];
+    let conditions : any = ['decresce','cresce'];
     this.listPopover(condField,conditions);
   }
   
@@ -76,6 +81,11 @@ export class InVisumOperatePage {
   
   sFset(setField:string) { //funtion to select from sets
     this.listPopover(setField,this.mOp.getWorkingSetsKeys());
+  }
+
+  stringPopover(inTitle) {
+    let popover = this.popoverCtrl.create(PopupStringPage,{title:inTitle});
+    popover.present();
   }
 
   numberPopover(inTitle) {
