@@ -3,7 +3,7 @@ import { NavController, ToastController } from 'ionic-angular';
 
 import { TranslateService } from 'ng2-translate/ng2-translate';
 import { InVisumWelcomePage } from '../in-visum-welcome/in-visum-welcome';
-import { User, FakeUser, ApiTalker} from '../../providers/providers';
+import { ApiTalker} from '../../providers/providers';
 import { Observable} from 'rxjs/Observable';
 
 /*
@@ -31,11 +31,9 @@ export class InVisumSignupPage {
   private signupErrorString: string;
 
   constructor(public navCtrl: NavController,
-              public user: User,
               public toastCtrl: ToastController,
               public translateService: TranslateService,
-              public api: ApiTalker, 
-              public fu : FakeUser) {
+              public api: ApiTalker) {
 
     this.translateService.get('SIGNUP_ERROR').subscribe((value) => {
       this.signupErrorString = value;

@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { NavController, NavParams } from 'ionic-angular';
 
-import { FakeItems, ApiTalker, SetSelect} from '../../providers/providers';
+import { ApiTalker, SetSelect} from '../../providers/providers';
 import { InVisumSearchResultPage } from '../in-visum-search-result/in-visum-search-result';
 import { InVisumSearchListPage } from '../in-visum-search-list/in-visum-search-list';
 import { InVisumOperatePage } from '../in-visum-operate/in-visum-operate';
@@ -17,7 +17,7 @@ export class InVisumSearchPage {
   errorString: string;
 
 
-  constructor(public navCtrl: NavController, public navParams: NavParams, public items: FakeItems, public api: ApiTalker, public set: SetSelect) {}
+  constructor(public navCtrl: NavController, public navParams: NavParams, public api: ApiTalker, public set: SetSelect) {}
 
   shorten(x){ let max: any = 60; return (x.length > max)? x.substr(0, max-3)+"..." : x; }
 

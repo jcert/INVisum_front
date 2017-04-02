@@ -5,7 +5,7 @@ import { TranslateService } from 'ng2-translate/ng2-translate';
 
 import { InVisumWelcomePage } from '../in-visum-welcome/in-visum-welcome';
 import { InVisumSignupPage } from '../in-visum-signup/in-visum-signup';
-import { User, FakeUser, ApiTalker} from '../../providers/providers';
+import { ApiTalker} from '../../providers/providers';
 import { Observable} from 'rxjs/Observable';
 
 /*
@@ -32,12 +32,10 @@ export class InVisumLoginPage {
   private signupErrorString: string;
 
   constructor(public navCtrl: NavController,
-              public user: User,
               public navPar: NavParams,
               public toastCtrl: ToastController,
               public translateService: TranslateService,
-              public api: ApiTalker, 
-              public fu : FakeUser) {
+              public api: ApiTalker) {
 
     this.translateService.get('SIGNUP_ERROR').subscribe((value) => {
       this.signupErrorString = value;

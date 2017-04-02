@@ -107,6 +107,6 @@ export class ApiTalker {
     /*if(false) { //check if not logged in, if so, return to login-page
       this.navCtrl.setRoot(InVisumLoginPage);
     }*/
-    return Observable.throw(error.json().error || "server error");
+    return Observable.throw( "server error");//error.json().error ||
   }
 }

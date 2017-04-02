@@ -7,21 +7,6 @@ import { AuthHttp } from 'angular2-jwt';
 
 import { MyApp } from './app.component';
 
-import { CardsPage } from '../pages/cards/cards';
-import { ContentPage } from '../pages/content/content';
-import { LoginPage } from '../pages/login/login';
-import { MapPage } from '../pages/map/map';
-import { SignupPage } from '../pages/signup/signup';
-import { TabsPage } from '../pages/tabs/tabs';
-import { TutorialPage } from '../pages/tutorial/tutorial';
-import { WelcomePage } from '../pages/welcome/welcome';
-import { ListMasterPage } from '../pages/list-master/list-master';
-import { ItemCreatePage } from '../pages/item-create/item-create';
-import { ItemDetailPage } from '../pages/item-detail/item-detail';
-import { MenuPage } from '../pages/menu/menu';
-import { SettingsPage } from '../pages/settings/settings';
-import { SearchPage } from '../pages/search/search';
-
 import { InVisumWelcomePage } from '../pages/in-visum-welcome/in-visum-welcome';
 import { InVisumLoginPage } from '../pages/in-visum-login/in-visum-login';
 import { InVisumFAQPage } from '../pages/in-visum-faq/in-visum-faq';
@@ -44,12 +29,8 @@ import { ReputationIcon } from '../pages/reputation-icon/reputation-icon';
 
 import { ApiTalker, getAuthHttp } from '../providers/api-talker';
 import { SetSelect } from '../providers/set-select';
-import { User, FakeUser } from '../providers/user';
-import { Api } from '../providers/api';
 import { Settings } from '../providers/settings';
 import { MakeOperation } from '../providers/make-operation';
-import { Items } from '../mocks/providers/items';
-import { FakeItems } from '../mocks/providers/fake-items';
 import { PlotHelp } from '../providers/plot-help';
 
 import { TranslateModule, TranslateLoader, TranslateStaticLoader } from 'ng2-translate/ng2-translate';
@@ -83,20 +64,6 @@ export function provideSettings(storage: Storage) {
  */
 let pages = [
   MyApp,
-  CardsPage,
-  ContentPage,
-  LoginPage,
-  MapPage,
-  SignupPage,
-  TabsPage,
-  TutorialPage,
-  WelcomePage,
-  ListMasterPage,
-  ItemDetailPage,
-  ItemCreatePage,
-  MenuPage,
-  SettingsPage,
-  SearchPage,
   InVisumWelcomePage,
   InVisumLoginPage,
   InVisumFAQPage,
@@ -134,11 +101,6 @@ export function providers() {
     PlotHelp,
     ApiTalker,
     MakeOperation,
-    FakeUser,
-    User,
-    Api,
-    FakeItems,
-    Items,
     {provide: AuthHttp,useFactory: getAuthHttp,deps: [Http]},
     { provide: Settings, useFactory: provideSettings, deps: [ Storage ] },
     // Keep this to enable Ionic's runtime error handling during development

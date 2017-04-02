@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { NavController, NavParams, PopoverController } from 'ionic-angular';
-import { FakeItems, ApiTalker, SetSelect, MakeOperation} from '../../providers/providers';
+import { ApiTalker, SetSelect, MakeOperation} from '../../providers/providers';
 import { PopupSelectPage } from './popup-select';
 import { PopupInsertPage } from './popup-insert';
 import { PopupStringPage } from './popup-string';
@@ -24,8 +24,8 @@ export class InVisumOperatePage {
   chosen : boolean = false;
   command : any = {op:null,args:{}};
   
-  constructor(public navCtrl: NavController, public navParams: NavParams, 
-              public items: FakeItems, public api: ApiTalker, public sets: SetSelect, 
+  constructor(public navCtrl: NavController, public navParams: NavParams,
+              public api: ApiTalker, public sets: SetSelect, 
               public popoverCtrl: PopoverController, public mOp: MakeOperation) {
   }
   

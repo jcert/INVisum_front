@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { NavController, NavParams } from 'ionic-angular';
 
 
-import { FakeItems, ApiTalker, SetSelect} from '../../providers/providers';
+import { ApiTalker, SetSelect} from '../../providers/providers';
 import { InVisumSearchResultPage } from '../in-visum-search-result/in-visum-search-result';
 import { Dataset } from '../../models/dataset';
 
@@ -16,7 +16,7 @@ export class InVisumSearchListPage {
   errorString: string;
 
 
-  constructor(public navCtrl: NavController, public navParams: NavParams, public items: FakeItems, public api: ApiTalker, public set: SetSelect) {
+  constructor(public navCtrl: NavController, public navParams: NavParams, public api: ApiTalker, public set: SetSelect) {
     //this.set = navParams.get('set');
     this.currentItems = set.get();
     
