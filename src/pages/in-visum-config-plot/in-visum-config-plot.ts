@@ -34,7 +34,7 @@ export class InVisumConfigPlotPage {
     popover.present();
   }
   goToGraph(x) {
-    this.navCtrl.push(PopupDisplayGraphPage);
+    this.navCtrl.push(PopupDisplayGraphPage,{graphId:x});
     //this.presentModal();
     //let popover = this.popoverCtrl.create(PopupDisplayGraphPage,{graphId:x});
     //popover.present();
@@ -46,7 +46,7 @@ export class InVisumConfigPlotPage {
       let id: any  = set.id;
       let typeId: any = this.pH.graphTypeToId(typeName); 
       console.log(this.pH.getAllFromCurrent());
-      this.api.postComplete('personal/plot/'+typeId+'/'+id+'/', {}).subscribe( res => {console.log(JSON.parse(res.text()).id);this.goToGraph(JSON.parse(res.text()).id)});
+      this.api.postComplete('personal/plot/'+typeId+'/'+id+'/', {}).subscribe( res => {this.goToGraph(JSON.parse(res.text()).id)});
         
     }
   }

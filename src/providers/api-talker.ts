@@ -1,9 +1,11 @@
 import { Injectable } from '@angular/core';
+import { NavController } from 'ionic-angular';
 import { RequestOptions, Response, Headers } from '@angular/http';
 import { Observable} from 'rxjs/Observable';
 import 'rxjs/Rx';
 import 'rxjs/add/operator/map';
 import { AuthHttp, AuthConfig } from 'angular2-jwt';
+import { InVisumLoginPage } from '../in-visum-login/in-visum-login';
 
 
 /**
@@ -33,7 +35,7 @@ export class ApiTalker {
 
   getComplete(endpoint: string) {
     let y = new RequestOptions({method:'get',headers:new Headers({'Content-Type': 'application/json','Accept': 'application/json','Authorization': 'JWT '+this.token}), withCredentials:true});
-    return this.authHttp.get(this.url + endpoint, y);
+    return this.authHttp.get(this.url + endpoint, y).catch(this.handleError);;
   }
   
   get(what:string) {
@@ -44,11 +46,11 @@ export class ApiTalker {
   
   postComplete(endpoint: string, body: any) {
     let y = new RequestOptions({method:'post',headers:new Headers({'Content-Type': 'application/json','Authorization': 'JWT '+this.token}), withCredentials:true});
-    return this.authHttp.post(this.url + endpoint, body, y);
+    return this.authHttp.post(this.url + endpoint, body, y).catch(this.handleError);;
   }
   deleteComplete(endpoint: string) {
     let y = new RequestOptions({method:'delete',headers:new Headers({'Content-Type': 'application/json','Authorization': 'JWT '+this.token}), withCredentials:true});
-    return this.authHttp.delete(this.url + endpoint, y);
+    return this.authHttp.delete(this.url + endpoint, y).catch(this.handleError);;
   }
  
   getFeatured() {
@@ -66,7 +68,7 @@ export class ApiTalker {
   
   authenticate(user:string, pass:string) {
     return this.authHttp.post(this.url+'auth/',{'username':user,'password':pass})
-               .subscribe( resp => {this.token = JSON.parse(resp.text()).token}, err => console.log('error authenticate'));
+               .subscribe( resp => {this.token = JSON.parse(resp.text()).token}, err => this.handleError(err));
   }
 
   post(what:string, options?: RequestOptions) {
@@ -76,15 +78,15 @@ export class ApiTalker {
   }
 
   put(endpoint: string, body: any, options?: RequestOptions) {
-    return this.authHttp.put(this.url + '/' + endpoint, body, options);
+    return this.authHttp.put(this.url + '/' + endpoint, body, options).catch(this.handleError);
   }
 
   delete(endpoint: string, body: any, options?: RequestOptions) {
-    return this.authHttp.post(this.url + '/' + endpoint, body, options);
+    return this.authHttp.post(this.url + '/' + endpoint, body, options).catch(this.handleError);
   }
 
   patch(endpoint: string, body: any, options?: RequestOptions) {
-    return this.authHttp.put(this.url + '/' + endpoint, body, options);
+    return this.authHttp.put(this.url + '/' + endpoint, body, options).catch(this.handleError);
   }
   
   queryFeatured() {
@@ -102,6 +104,9 @@ export class ApiTalker {
   private handleError (error: Response) {
     console.error(error);
     console.log("my error");
+    /*if(false) { //check if not logged in, if so, return to login-page
+      this.navCtrl.setRoot(InVisumLoginPage);
+    }*/
     return Observable.throw(error.json().error || "server error");
   }
 }
