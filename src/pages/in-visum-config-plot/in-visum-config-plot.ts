@@ -1,8 +1,9 @@
 import { Component } from '@angular/core';
-import { NavController, PopoverController } from 'ionic-angular';
+import { NavController, PopoverController, ModalController } from 'ionic-angular';
 import { PlotHelp, ApiTalker } from '../../providers/providers';
 import { PopupSelectTypePage } from './popup-select-type';
 import { PopupInsertTypePage } from './popup-insert-type';
+import { PopupDisplayGraphPage } from './popup-display-graph';
 
 @Component({
   selector: 'page-in-visum-config-plot',
@@ -10,13 +11,15 @@ import { PopupInsertTypePage } from './popup-insert-type';
 })
 export class InVisumConfigPlotPage {
   graphTypes: any = ['Histogram','Bar','Line','Scatter'];
-  constructor(public navCtrl: NavController, public pH: PlotHelp, public popoverCtrl: PopoverController, public api: ApiTalker) {
+  constructor(public navCtrl: NavController, public pH: PlotHelp, public popoverCtrl: PopoverController, public api: ApiTalker,public modalCtrl: ModalController) {
     //MAKE OPERATIONS
     pH.prepare();
-  
-  
   }
-  
+
+  presentModal() {
+    let modal = this.modalCtrl.create(PopupDisplayGraphPage);
+    modal.present();
+  }
   getWorkingSet() {    
     let popover = this.popoverCtrl.create(PopupSelectTypePage,{title:'Selecione um Dataset',field:'set',list:this.pH.workingSet(),nameFunct: (x) => x.id});
     popover.present();
@@ -31,8 +34,10 @@ export class InVisumConfigPlotPage {
     popover.present();
   }
   goToGraph(x) {
-    let popover = this.popoverCtrl.create(PopupDisplayGraphPage,{graphId:x});
-    popover.present();
+    this.navCtrl.push(PopupDisplayGraphPage);
+    //this.presentModal();
+    //let popover = this.popoverCtrl.create(PopupDisplayGraphPage,{graphId:x});
+    //popover.present();
   }
   createGraph() {
     let set : any = this.pH.getFromCurrent('set');
@@ -41,15 +46,8 @@ export class InVisumConfigPlotPage {
       let id: any  = set.id;
       let typeId: any = this.pH.graphTypeToId(typeName); 
       console.log(this.pH.getAllFromCurrent());
-      this.api.postComplete('personal/plot/'+typeId+'/'+id+'/', {}).subscribe( res => {this.goToGraph(JSON.parse(res.text()).id)});  
+      this.api.postComplete('personal/plot/'+typeId+'/'+id+'/', {}).subscribe( res => {console.log(JSON.parse(res.text()).id);this.goToGraph(JSON.parse(res.text()).id)});
+        
     }
   }
-}
-@Component({
-  selector: 'page-popup-display-graph',
-  template: `<iframe src="{{tmp}}"></iframe>`
-})
-export class PopupDisplayGraphPage {
-  constructor() {}
-
 }

@@ -15,7 +15,7 @@ export class MakeOperation {
   //operation_name : { }
     Slice  : {chosenName : 'Slice',  args : [['set',  "sFset", 'funcTrue', ''] ,['cond', 'sFslice', 'funcTrue', '?'],['condExp', 'inputNumber', 'funcTrue','?' ]]},//left,right,step
     Sort   : {chosenName : 'Sort',   args : [['set',  "sFset", 'funcTrue', ''] ,['col' , 'sFcol', 'funcHasSet', 'by' ],['ordem', 'sFsort', 'funcTrue','ascending' ]]},//
-    Filter : {chosenName : 'Filter', args : [['set',  "sFset", 'funcTrue', ''] ,['regex', 'inputString', 'funcTrue', '' ]]},//
+    Filter : {chosenName : 'Filter', args : [['set',  "sFset", 'funcTrue', ''] ,['items', 'inputString', 'funcTrue', '' ]]},//
     Merge  : {chosenName : 'Merge',  args : [['set1', "sFset", 'funcTrue', '' ],['set2', "sFset", 'funcTrue', '']]},
     Join   : {chosenName : 'Join',   args : [['set1', "sFset", 'funcTrue', '' ],['set2', "sFset", 'funcTrue', '' ],['col1', 'sFcol', 'funcHasSet1', 'left_on' ],['col2', 'sFcol', 'funcHasSet2', 'right_on' ]]}
   }
@@ -79,8 +79,6 @@ export class MakeOperation {
       for(let i of Object.keys(this.sourceDataList)) {
         this.workingSet[i] = this.sourceDataList[i];  
       }  
-      console.log('workingSet:');
-      console.log(this.workingSet);
     });
   }
   
@@ -198,13 +196,13 @@ export class MakeOperation {
               body = {by:y['col'],ascending:(y['ordem'] =='cresce')};
             break;
             case('Filter'):
-              body = {regex:".*"+y['regex']+".*"};
+              body = {items:y['items']};
             break;
             case('Slice'): 
               body[y.cond] = y.condExp;
             break;
           }  
-          res.push(this.api.postComplete('personal/operation/'+opToOpid(y)+'/'+y.set+'/ ',{}));
+          res.push(this.api.postComplete('personal/operation/'+opToOpid(y)+'/'+y.set+'/ ',body));
         }
         if(y.set1&&y.set2) {
           let body: any = {};
@@ -214,7 +212,7 @@ export class MakeOperation {
             body = {left_on:y.col1, right_on:y.col1};
             break;
           }  
-          res.push(this.api.postComplete('personal/operation/'+opToOpid(y)+'/'+y.set1+'-'+y.set2+'/',{}));    
+          res.push(this.api.postComplete('personal/operation/'+opToOpid(y)+'/'+y.set1+'-'+y.set2+'/',body));    
         }
       }
       let httpForObservable : any = Observable.concat(res); // note that array is passed

@@ -50,11 +50,7 @@ export class InVisumOperatePage {
   
   sFcol(colField:string) { //select from column
     let x = colField.match('col(\d?)');
-    console.log('columns in id: ');
-    console.log(this.mOp.getHeaders(this.mOp.getOp()['set'+x[1]]));
     let y: any = this.mOp.getHeaders(this.mOp.getOp()['set'+x[1]]);
-    console.log('columns: ');
-    console.log(y);
     //get in y the colums to the input set
     let conditions : any = y;
     this.listPopover(colField,conditions);
@@ -62,7 +58,7 @@ export class InVisumOperatePage {
   }
   
   inputString(field:string) {
-    this.stringPopover(field);
+    this.stringPopover(field,this.mOp.getHeaders(this.mOp.getOp()['set']));
   }
   
   inputNumber(field:string) {
@@ -83,8 +79,8 @@ export class InVisumOperatePage {
     this.listPopover(setField,this.mOp.getWorkingSetsKeys());
   }
 
-  stringPopover(inTitle) {
-    let popover = this.popoverCtrl.create(PopupStringPage,{title:inTitle});
+  stringPopover(inTitle,inList) {
+    let popover = this.popoverCtrl.create(PopupSelectPage,{title:inTitle,field:inTitle,list:inList,selectMany:true});
     popover.present();
   }
 
@@ -94,7 +90,7 @@ export class InVisumOperatePage {
   }
 
   listPopover(inTitle,inList) {
-    let popover = this.popoverCtrl.create(PopupSelectPage,{title:inTitle,list:inList});
+    let popover = this.popoverCtrl.create(PopupSelectPage,{title:inTitle,field:inTitle,list:inList});
     popover.present();
   }
   

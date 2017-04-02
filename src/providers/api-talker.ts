@@ -17,7 +17,7 @@ export function getAuthHttp(http) {
   return new AuthHttp(new AuthConfig({
     headerPrefix: 'inVisumToken',
     noJwtError: true,
-    globalHeaders: [{'Accept': 'application/json', 'Content-Type': 'application/json'}],
+    globalHeaders: [{'Accept': 'application/json,text/html', 'Content-Type': 'application/json'}],
     tokenGetter: (() => storage.get('id_token')),
   }), http);
 }
@@ -32,7 +32,7 @@ export class ApiTalker {
   constructor(public authHttp: AuthHttp) {}
 
   getComplete(endpoint: string) {
-    let y = new RequestOptions({method:'get',headers:new Headers({'Content-Type': 'application/json','Authorization': 'JWT '+this.token}), withCredentials:true});
+    let y = new RequestOptions({method:'get',headers:new Headers({'Content-Type': 'application/json','Accept': 'application/json','Authorization': 'JWT '+this.token}), withCredentials:true});
     return this.authHttp.get(this.url + endpoint, y);
   }
   

@@ -13,20 +13,16 @@
       <ion-card-content item-left icon-right>
         <ion-grid>
           <ion-row>
-            <ion-col col-10>
-                <h2><strong>{{ item.title }}</strong></h2>
-            </ion-col>
+            <ion-col col-10 align-self-start [ngStyle]="{'margin-bottom':'auto','margin-top':'auto'}" class="my-card-title" >{{ item.title }}</ion-col>
             <ion-col col-2>
-              <ion-icon *ngIf=" set.exist(item)" name="remove-circle" large (click)="set.remove(item)" ></ion-icon>
-              <ion-icon *ngIf="!set.exist(item)" name="add-circle"    large  (click)="set.add(item)" ></ion-icon>        
+              <ion-icon class="my-card-icon" *ngIf=" set.exist(item)" name="remove-circle" large (click)="set.remove(item)" ></ion-icon>
+              <ion-icon class="my-card-icon" *ngIf="!set.exist(item)" name="add-circle"    large  (click)="set.add(item)" ></ion-icon>        
             </ion-col>            
           </ion-row>
         </ion-grid>
         <!--<reputation-icon item-left icon="star" reputation={{item.rating}} ></reputation-icon>-->
-        <p (click)="openItem(item)">{{ (item.about) }}</p>
+        <p class="my-card-text" (click)="openItem(item)">{{ (item.about) }}</p>
       </ion-card-content>
-
-
     </ion-card>
   </ion-list>
 </ion-content>
