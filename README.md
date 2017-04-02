@@ -14,7 +14,7 @@ If you want to contact us, send an email to in.visum.contato@gmail.com .
 
 ## Getting started
 
-To run our platform, follow these instructions (one modified dependency is needed):
+To run our app,  run the following commands (one modified dependency is needed):
 
   $ git clone https://github.com/jcert/INVisum_front
 
@@ -28,4 +28,6 @@ To run our platform, follow these instructions (one modified dependency is neede
 
   $ cd ../INVisum_front
 
-  $cd ionic serve
+  $ ionic serve
+
+In order to get a fully working platform, the API needs to be running as well.
