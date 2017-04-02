@@ -1,4 +1,11 @@
 page-in-visum-welcome {
+
+  ion-navbar {
+    text-align: center;
+    vertical-align: middle;
+    font-size: 30px  
+  }
+
   .splash-bg {
     position: relative;
     background: url('../assets/img/in_visum_vertical_logo.png') repeat-x transparent;
@@ -14,21 +21,23 @@ page-in-visum-welcome {
     to { background-position: 100% 0; }
   }
 
+  .search-button {
+    position: sticky;
+    left: 95%;
+
+  }
+
   .featured-sets {  
     text-align: center;
   }
-  .splash-info {
-    position: relative;
-    z-index: 2;
-    margin-top: -64px;
-    text-align: center;
-  }
+
   .splash-logo {
     margin: auto;
-    background: url('../assets/img/in_visum_appicon.png');/* repeat transparent;*/
-    background-size: 100%;
-    width: 227px;
-    height: 110px;
+    background: url('../assets/img/in_visum_appicon.jpeg');/* repeat transparent;*/
+    background-size: 50%;     
+    background-origin: inherit;
+    background-position: center; 
+    background-repeat: no-repeat;
   }
   button.busca {
     text-align: center;
@@ -47,14 +56,17 @@ page-in-visum-welcome {
   }
   
   .bottom-text {
-    padding: 10%
+    padding: 3%
   
   }
   .footer {
+    background-color: color($colors, dark, base);
     position: fixed;
     bottom: 0;
     width: 100%;
-    text-align: center;;
+    height: 5%;
+    text-align: center;
+    font-size:4vh;
   }
   button.FAQ {
     /*float: left;*/

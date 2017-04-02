@@ -1,6 +1,18 @@
-page-search {
+page-in-visum-search {
 
+
+    
   ion-card {
-      display: flex;
+  
+    .my-card-title {
+      font-size:8vmin;
+    }
+    .my-card-text {
+      font-size:4vmax;
+    
+    }
+    ion-icon {
+      font-size:20vmin;  
+    }  
   }
 }

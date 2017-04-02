@@ -10,25 +10,20 @@
 <ion-content>
 
   <button ion-button block (click)="selectOp(standardName,mOp.getOpList())" >  {{mOp.getOp()[standardName]||standardName}}</button>
-  <button ion-button block color="dark" *ngFor="let field of mOp.getOpList()[mOp.getOp()[standardName]]?.args" (click)="functionThatUsesThis(field)"> {{mOp.getOp()[field[0]]||field[0]}} </button>
-  <ion-fab middle right edge>
-    <button ion-fab mini><ion-icon name="md-arrow-dropdown-circle"></ion-icon></button>
+  <button ion-button block outline *ngFor="let field of mOp.getOpList()[mOp.getOp()[standardName]]?.args" (click)="functionThatUsesThis(field)"> {{mOp.getOp()[field[0]]||field[0]}} </button>
+  <div padding class="operations-stack">
+    <ion-card  *ngFor="let item of mOp.getStack()">
+      <ion-card-content>
+        <div>#{{item.id}}|{{item[standardName]}}</div>
+      </ion-card-content>
+    </ion-card>
+  </div>
+  <ion-fab bottom right>
+    <button ion-fab ><ion-icon name="md-arrow-dropleft"></ion-icon></button>
     <ion-fab-list side="left">
-      <button ion-fab color="secondary" ><ion-icon name="md-build"></ion-icon></button>
+      <button ion-fab color="secondary" (click)="goPlotConfig()" ><ion-icon name="md-build" ></ion-icon></button>
       <button ion-fab color="{{(mOp.isComplete())?'secondary':'dark'}}" (click)="pushCurrent()" ><ion-icon name="add"></ion-icon></button>
       <button ion-fab color="danger" (click)="mOp.clearStack()" ><ion-icon name="md-trash"></ion-icon></button>
     </ion-fab-list>
   </ion-fab>
-  <div padding class="operations-stack">
-    <ion-card  *ngFor="let item of mOp.getStack()">
-      <ion-card-content>
-        <div><!--<reputation-icon item-left icon="star" reputation={{item.rating}} ></reputation-icon>-->{{ item[standardName] }}</div>
-        <!--(click)="openItem(item)"-->
-        <p >{{ (item.about) }}</p>
-        <ion-item>
-          <p>{{ item.owner }}</p>
-        </ion-item>
-      </ion-card-content>
-    </ion-card>
-  </div>
 </ion-content>

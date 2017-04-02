@@ -10,18 +10,19 @@
 <ion-content>
   <ion-list>
     <ion-card  *ngFor="let item of currentItems">
-      <ion-card-content>
-        <div><reputation-icon item-left icon="star" reputation={{item.rating}} ></reputation-icon>{{ item.title }}</div>
-      
-        <p (click)="openItem(item)">{{ (item.about) }}</p>
-        <ion-item>
-          <ion-icon *ngIf=" set.exist(item)" name="remove-circle" item-left (click)="set.remove(item)" ></ion-icon>
-          <ion-icon *ngIf="!set.exist(item)" name="add-circle" item-left (click)="set.add(item)" ></ion-icon>
-          <p>{{ item.owner }}</p>
-        </ion-item>
+      <ion-card-content item-left icon-right>
+        <ion-grid>
+          <ion-row>
+            <ion-col col-10 align-self-start [ngStyle]="{'margin-bottom':'auto','margin-top':'auto'}" class="my-card-title" >{{ item.title }}</ion-col>
+            <ion-col col-2>
+              <ion-icon class="my-card-icon" *ngIf=" set.exist(item)" name="remove-circle" large (click)="set.remove(item)" ></ion-icon>
+              <ion-icon class="my-card-icon" *ngIf="!set.exist(item)" name="add-circle"    large  (click)="set.add(item)" ></ion-icon>        
+            </ion-col>            
+          </ion-row>
+        </ion-grid>
+        <!--<reputation-icon item-left icon="star" reputation={{item.rating}} ></reputation-icon>-->
+        <p class="my-card-text" (click)="openItem(item)">{{ (item.about) }}</p>
       </ion-card-content>
-
-
     </ion-card>
   </ion-list>
 </ion-content>

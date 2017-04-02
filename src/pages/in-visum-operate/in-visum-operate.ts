@@ -1,9 +1,10 @@
 import { Component } from '@angular/core';
-import { NavController, NavParams, ActionSheetController, PopoverController } from 'ionic-angular';
+import { NavController, NavParams, PopoverController } from 'ionic-angular';
 import { FakeItems, ApiTalker, SetSelect, MakeOperation} from '../../providers/providers';
 import { PopupSelectPage } from './popup-select';
 import { PopupInsertPage } from './popup-insert';
-import { InVisumPlotConfigPage } from '../in-visum-plot-config/in-visum-plot-config';
+import { PopupStringPage } from './popup-string';
+import { InVisumConfigPlotPage } from '../in-visum-config-plot/in-visum-config-plot';
 
 
 @Component({
@@ -25,7 +26,7 @@ export class InVisumOperatePage {
   
   constructor(public navCtrl: NavController, public navParams: NavParams, 
               public items: FakeItems, public api: ApiTalker, public sets: SetSelect, 
-              public actionSheetCtrl: ActionSheetController,  public popoverCtrl: PopoverController, public mOp: MakeOperation) {
+              public popoverCtrl: PopoverController, public mOp: MakeOperation) {
   }
   
   ngOnInit() {
@@ -49,15 +50,15 @@ export class InVisumOperatePage {
   
   sFcol(colField:string) { //select from column
     let x = colField.match('col(\d?)');
-    console.log('columns in id: ');
-    console.log(this.mOp.getHeaders(this.mOp.getOp()['set'+x[1]]));
     let y: any = this.mOp.getHeaders(this.mOp.getOp()['set'+x[1]]);
-    console.log('columns: ');
-    console.log(y);
     //get in y the colums to the input set
     let conditions : any = y;
     this.listPopover(colField,conditions);
     
+  }
+  
+  inputString(field:string) {
+    this.stringPopover(field,this.mOp.getHeaders(this.mOp.getOp()['set']));
   }
   
   inputNumber(field:string) {
@@ -65,7 +66,7 @@ export class InVisumOperatePage {
   }
 
   sFsort(condField:string) { //select for sort
-    let conditions : any = ['maior','menor'];
+    let conditions : any = ['decresce','cresce'];
     this.listPopover(condField,conditions);
   }
   
@@ -78,14 +79,24 @@ export class InVisumOperatePage {
     this.listPopover(setField,this.mOp.getWorkingSetsKeys());
   }
 
+  stringPopover(inTitle,inList) {
+    let popover = this.popoverCtrl.create(PopupSelectPage,{title:inTitle,field:inTitle,list:inList,selectMany:true});
+    popover.present();
+  }
+
   numberPopover(inTitle) {
     let popover = this.popoverCtrl.create(PopupInsertPage,{title:inTitle});
     popover.present();
   }
 
   listPopover(inTitle,inList) {
-    let popover = this.popoverCtrl.create(PopupSelectPage,{title:inTitle,list:inList});
+    let popover = this.popoverCtrl.create(PopupSelectPage,{title:inTitle,field:inTitle,list:inList});
     popover.present();
+  }
+  
+  goPlotConfig() {
+    this.mOp.StackCleaner();
+    this.navCtrl.push(InVisumConfigPlotPage);
   }
   
   selectOp(inTitle,inList) {

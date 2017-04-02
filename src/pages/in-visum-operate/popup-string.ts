@@ -4,16 +4,16 @@ import { MakeOperation} from '../../providers/providers';
 
 
 @Component({
-  selector: 'popup-insert',
+  selector: 'popup-string',
   template: `
     <ion-list>
       <ion-list-header>{{title}}</ion-list-header>
-      <ion-input [(ngModel)]="input" type="number" placeholder="Valor" autofocus value=""></ion-input>
+      <ion-input [(ngModel)]="input" type="string" placeholder="Valor" value=""></ion-input>
       <button ion-button block (click)="close()">Usar</button>
     </ion-list>
   `
 })
-export class PopupInsertPage {
+export class PopupStringPage {
   title : string;
   input : string;
   constructor(public viewCtrl: ViewController, public navParams: NavParams, public mOp: MakeOperation) {

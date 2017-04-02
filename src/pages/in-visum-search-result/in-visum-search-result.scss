@@ -1,14 +1,10 @@
-page-item-detail {
-  .item-profile {
-    width: 100%;
-    background-position: center center;
-    background-size: cover;
-    height: 250px;
+page-in-visum-search-result {
+  .item-detail {
+    h2 {
+      font-size: 12vmin;
+    }
+  
+    font-size: 8vmin;
   }
 
-  .item-detail {
-    width: 100%;
-    background: white;
-    position: absolute;
-  }
 }

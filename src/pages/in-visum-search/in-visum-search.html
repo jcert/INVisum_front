@@ -23,17 +23,22 @@
         </ion-segment-button>
       </ion-segment>
     </div>
-    <ion-card  *ngFor="let item of currentItems">
+    
+    <ion-card  *ngFor="let item of currentItems"> 
       <ion-card-content>
-        <div><reputation-icon item-left icon="star" reputation={{item.rating}} ></reputation-icon>{{ item.title }}</div>
-      
-        <p (click)="openItem(item)">{{ (item.about) }}</p>
-        <ion-item>
-          <ion-icon *ngIf=" set.exist(item)" name="remove-circle" item-left (click)="set.remove(item)" ></ion-icon>
-          <ion-icon *ngIf="!set.exist(item)" name="add-circle" item-left (click)="set.add(item)" ></ion-icon>
-          <p>{{ item.owner }}</p>
-        </ion-item>
+        <ion-grid>
+          <ion-row>
+            <ion-col col-10 align-self-start [ngStyle]="{'margin-bottom':'auto','margin-top':'auto'}" class="my-card-title" >{{ item.title }}</ion-col>
+            <ion-col col-2  align-self-start justify-self-end>
+              <ion-icon *ngIf=" set.exist(item)" name="remove-circle" item-left (click)="set.remove(item)" ></ion-icon>
+              <ion-icon *ngIf="!set.exist(item)" name="add-circle" item-left (click)="set.add(item)" ></ion-icon>
+            </ion-col>
+          </ion-row>
+        </ion-grid>
+        <p class="my-card-text" (click)="openItem(item)">{{ (item.about) }}</p>
+        <!-- <div><reputation-icon item-left icon="star" reputation={{item.rating}} ></reputation-icon></div> -->    
       </ion-card-content>
     </ion-card>
+  
   </ion-list>
 </ion-content>

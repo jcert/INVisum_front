@@ -1,35 +1,35 @@
 
 <ion-header *ngIf="is_logged()">
   <ion-navbar>
-    <button ion-button menuToggle icon-only>
-      <ion-icon name='menu'></ion-icon>
-    </button>
+        <button ion-button menuToggle icon-only>
+          <ion-icon name='menu'></ion-icon>
+        </button>
+        In Visum
+        <button ion-button clear icon-only class="search-button" (click)="busca()">
+          <ion-icon name='search' color='dark' ></ion-icon>
+        </button>
   </ion-navbar>
 </ion-header>
 <ion-content scroll="false">
-  <div class="splash-bg"></div>
-  <div class="splash-info">
-    <div class="splash-logo"></div>
+
+  <div>
+    <h1>Featured</h1>
+    <div padding class="featured-sets" *ngIf="is_logged()">
+      <ion-card  *ngFor="let item of currentFeatured">
+        <ion-card-content>
+          <div><!--<reputation-icon item-left icon="star" reputation={{item.rating}} ></reputation-icon>-->{{ item.title }}</div>
+          <!--(click)="openItem(item)"-->
+          <p >{{ (item.about) }}</p>
+          <ion-item>
+            <!--<ion-icon *ngIf=" set.exist(item)" name="remove-circle" item-left (click)="set.remove(item)" ></ion-icon>
+            <ion-icon *ngIf="!set.exist(item)" name="add-circle" item-left (click)="set.add(item)" ></ion-icon>-->
+            <p>{{ item.owner }}</p>
+          </ion-item>
+        </ion-card-content>
+      </ion-card>
+    </div>
   </div>
-  <div padding>
-    <button ion-button block (click)="busca()" class="busca">{{ 'Busca' | translate }}</button>
-    <button *ngIf="! is_logged()" ion-button block (click)="login()"  class="login" >{{ 'Login' | translate }}</button>
-    <button *ngIf="  is_logged()" ion-button block (click)="logout()" class="logout">{{ 'Logout' | translate }}</button>
-  </div>
-  <div padding class="featured-sets" *ngIf="is_logged()">
-    <ion-card  *ngFor="let item of currentFeatured">
-      <ion-card-content>
-        <div><!--<reputation-icon item-left icon="star" reputation={{item.rating}} ></reputation-icon>-->{{ item.title }}</div>
-        <!--(click)="openItem(item)"-->
-        <p >{{ (item.about) }}</p>
-        <ion-item>
-          <!--<ion-icon *ngIf=" set.exist(item)" name="remove-circle" item-left (click)="set.remove(item)" ></ion-icon>
-          <ion-icon *ngIf="!set.exist(item)" name="add-circle" item-left (click)="set.add(item)" ></ion-icon>-->
-          <p>{{ item.owner }}</p>
-        </ion-item>
-      </ion-card-content>
-    </ion-card>
-  </div>
+  
 
   <div center class="footer">
     <a inline (click)="faq()" class="bottom-text">{{ 'FAQ' | translate }}</a>

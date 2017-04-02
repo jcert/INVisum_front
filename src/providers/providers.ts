@@ -6,10 +6,12 @@ import { FakeItems } from '../mocks/providers/fake-items';
 import { ApiTalker } from './api-talker';
 import { SetSelect } from './set-select';
 import { MakeOperation } from './make-operation';
+import { PlotHelp } from './plot-help';
 
 
 export {
   SetSelect,
+  PlotHelp,
   MakeOperation,
   FakeUser,
   FakeItems,

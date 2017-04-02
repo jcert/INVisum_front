@@ -33,8 +33,13 @@ import { InVisumSearchPage } from '../pages/in-visum-search/in-visum-search';
 import { InVisumSearchListPage } from '../pages/in-visum-search-list/in-visum-search-list';
 import { InVisumSearchResultPage } from '../pages/in-visum-search-result/in-visum-search-result';
 import { InVisumOperatePage } from '../pages/in-visum-operate/in-visum-operate';
+import { InVisumConfigPlotPage } from '../pages/in-visum-config-plot/in-visum-config-plot';
+import { PopupDisplayGraphPage } from '../pages/in-visum-config-plot/popup-display-graph';
 import { PopupSelectPage } from '../pages/in-visum-operate/popup-select';
+import { PopupSelectTypePage } from '../pages/in-visum-config-plot/popup-select-type';
+import { PopupInsertTypePage } from '../pages/in-visum-config-plot/popup-insert-type';
 import { PopupInsertPage } from '../pages/in-visum-operate/popup-insert';
+import { PopupStringPage } from '../pages/in-visum-operate/popup-string';
 import { ReputationIcon } from '../pages/reputation-icon/reputation-icon';
 
 import { ApiTalker, getAuthHttp } from '../providers/api-talker';
@@ -45,6 +50,7 @@ import { Settings } from '../providers/settings';
 import { MakeOperation } from '../providers/make-operation';
 import { Items } from '../mocks/providers/items';
 import { FakeItems } from '../mocks/providers/fake-items';
+import { PlotHelp } from '../providers/plot-help';
 
 import { TranslateModule, TranslateLoader, TranslateStaticLoader } from 'ng2-translate/ng2-translate';
 
@@ -102,9 +108,15 @@ let pages = [
   InVisumProfilePage,
   InVisumSearchListPage,
   InVisumOperatePage,
+  InVisumConfigPlotPage,
   ReputationIcon,
   PopupSelectPage,
-  PopupInsertPage
+  PopupSelectTypePage,
+  PopupInsertPage,
+  PopupInsertTypePage,
+  PopupStringPage,
+  
+  PopupDisplayGraphPage
 ];
 
 export function declarations() {
@@ -119,6 +131,7 @@ export function providers() {
   return [
     Storage,
     SetSelect,
+    PlotHelp,
     ApiTalker,
     MakeOperation,
     FakeUser,
