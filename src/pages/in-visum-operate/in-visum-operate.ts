@@ -1,10 +1,12 @@
 import { Component } from '@angular/core';
 import { NavController, NavParams, PopoverController } from 'ionic-angular';
-import { ApiTalker, SetSelect, MakeOperation} from '../../providers/providers';
+import { SetSelect, MakeOperation} from '../../providers/providers';
+import { ApiTalker  } from '../../providers/api-talker';
 import { PopupSelectPage } from './popup-select';
 import { PopupInsertPage } from './popup-insert';
 import { PopupStringPage } from './popup-string';
 import { InVisumConfigPlotPage } from '../in-visum-config-plot/in-visum-config-plot';
+import { Observable} from 'rxjs/Observable';
 
 
 @Component({
@@ -30,7 +32,12 @@ export class InVisumOperatePage {
   }
   
   ngOnInit() {
+    this.mOp.clearAll();
     this.mOp.prepare();
+  }
+  
+  ngOnDestroy() {
+    this.mOp.clearAll();
   }
   
   pushCurrent() {
@@ -95,8 +102,11 @@ export class InVisumOperatePage {
   }
   
   goPlotConfig() {
-    this.mOp.StackCleaner();
-    this.navCtrl.push(InVisumConfigPlotPage);
+    this.mOp
+        .StackCleaner()
+        .subscribe( res => res.subscribe( r => console.log('gooder doing',r),inErr => console.log('inner error doing',inErr)), 
+                    err => console.log('error doing',err),
+                     () => this.navCtrl.push(InVisumConfigPlotPage));
   }
   
   selectOp(inTitle,inList) {

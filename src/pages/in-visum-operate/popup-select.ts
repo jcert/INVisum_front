@@ -13,7 +13,7 @@ import { MakeOperation} from '../../providers/providers';
         <ion-label> {{ i }} </ion-label>
         <ion-toggle checked="false" (click)="toggle(i)" ></ion-toggle>
       </ion-item>
-      <button ion-item *ngIf="keysListMultiple.length>0" (click)="closeMany()">Ok</button>
+      <button ion-item *ngIf="keysListMultiple.length>0" [ngStyle]="{'text-align': 'center'}"  (click)="closeMany()">Ok</button>
       
       <ion-item >
         <button ion-item *ngFor="let i of keysListOne" (click)="closeOne(i)">{{i}}</button>

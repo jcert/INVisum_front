@@ -9,7 +9,7 @@ import { MakeOperation} from '../../providers/providers';
     <ion-list>
       <ion-list-header>{{title}}</ion-list-header>
       <ion-input [(ngModel)]="input" type="string" placeholder="Valor" value=""></ion-input>
-      <button ion-button block (click)="close()">Usar</button>
+      <button ion-button block (click)="close()" [ngStyle]="{'text-align': 'center'}" >Usar</button>
     </ion-list>
   `
 })

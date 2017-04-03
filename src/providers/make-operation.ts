@@ -33,28 +33,51 @@ export class MakeOperation {
   
   prepare() {
     let personals: any = [];
+    let observableArray : any = [];
     this.sourceDataList = {};
+    
+    for(let i of this.sets.get()) {
+        observableArray.push(this.api.postComplete('datasets/personal/'+i.id+'/',{})); //
+      }
+    let kw  :any = Observable.concat(observableArray);
+    let kww :any = [];
+    
+    
     this.api.getComplete('personal/')
       .map(x => x.json())
-      .subscribe( res => 
+      .subscribe( 
+      res => 
         {
-          res.map(x => {this.api.deleteComplete('personal/'+x.id+'/').subscribe(res => {})});
-          for(let i of this.sets.get()) {
-            this.api.postComplete('datasets/personal/'+i.id+'/',{}).subscribe( res => {}, error => console.log('error'));
-          }
+          
+          res.map(x => kww.push(this.api.deleteComplete('personal/'+x.id+'/')));
         }, 
-      error => console.log('error')); 
-    Observable.timer(500)
-              .subscribe( x => this.api.getComplete('personal/')
-              .map( resp => resp.json())
-              .subscribe( res => {personals = res; this.fillSourceList(personals,this.sets.get())}, error => console.log('error')));
+      error => console.log('error'),
+      () => {
+              let kwwObser :any = Observable.concat(kww,kw);
+              kwwObser.subscribe( r => {r.subscribe()}, e => console.log(e), () => {
+                    Observable.timer(500).subscribe(
+                      response => 
+                        this.api.getComplete('personal/')
+                            .map( resp => resp.json())
+                            .subscribe( res => {personals = res; this.fillSourceList(personals,this.sets.get())}, 
+                            error => console.log('error')
+                            )
+                      )
+                    }    
+               
+              );
+            }
+      );                        
+      
   }
   
   reset() {
   
   }
   
-  fillSourceList(listPersonal, listOriginal) {
+  fillSourceList(lP, lO) {
+    let listPersonal = JSON.parse(JSON.stringify(lP));
+    let listOriginal = JSON.parse(JSON.stringify(lO));
     let y: any = {};
     for(let i of listOriginal) {
       let x = i.id;
@@ -83,7 +106,6 @@ export class MakeOperation {
   }
   
   ngOnDestroy() {
-    console.log('operations destroyed');
   }
   
   insert(label,field) {
@@ -121,8 +143,9 @@ export class MakeOperation {
   pushStack() {
     switch(this.opObj[this.standardName]) {
       case('Merge'):
+        this.opObj.col1 = this.getHeaders(this.opObj.set1)[0]; 
+        this.opObj.col2 = this.getHeaders(this.opObj.set2)[0];
       case('Join'):
-        console.log('Merge|Join');
         let x1: any = this.opObj.set1;
         let x2: any = this.opObj.set2;
         this.workingSet['t'+this.index] = {};
@@ -133,7 +156,7 @@ export class MakeOperation {
       default:
         this.workingSet['t'+this.index] = this.workingSet[this.opObj.set]; 
     }
-    
+    this.opObj.target = 't'+this.index;//generated step
     this.stack.push(this.opObj);
     this.opObj = {};
     this.index++;  
@@ -141,7 +164,7 @@ export class MakeOperation {
   getStack() {
     return this.stack;
   }
-  StackCleaner() {
+  StackCleaner() { //must return an observable to send the messages, errors and CONCLUSION TIME 
     //first you put in an array just the operations that lead to the very last one made
     let i: any = [];
     let f: any = 
@@ -181,14 +204,76 @@ export class MakeOperation {
         
       }
       
-      //finally, you must do all the operations before plotting
-      //do op magic, remeber to wait for an op to be done to do another, and do substitute the tmp names when doing 2-set operations
-      let res: any = [];
-      let opToOpid = (z) => { let dict: any = {'Sort':6,'Filter':3,'Slice':1,'Merge':1,'Join':1}; return dict[z[this.standardName]]};
       
+      
+      
+      //finally, you must do all the operations before plotting
+      //do op magic, remeber to wait for an op to be done to do another, and do substitute the tmp names when doing 2-set operations      
+      let opToOpid = (z) => { let dict: any = {'Sort':6,'Filter':3,'Slice':1,'Merge':1,'Join':1}; return dict[z[this.standardName]]};
+      let res: any = [];
+    /*
+      build the body for each request and make an array with just (type,(set|set1,set2),target) for easy use
+    */ 
+      for(let y of i) {
+        let aux: any = {type:y[this.standardName],target:y.target}; 
+        let body: any = {};
+        
+        switch(y[this.standardName]) { 
+          case('Sort'):
+            body = {by:y['col'],ascending:(y['ordem'] =='cresce')};
+            aux.set = y.set;
+          break;
+          case('Filter'):
+            body = {items:y['items']};
+            aux.set = y.set;
+          break;
+          case('Slice'): 
+            body[y.cond] = y.condExp;
+            aux.set = y.set;
+          break;
+          case('Merge'):
+          case('Join'):
+            body = {left_on:y.col1, right_on:y.col1};
+            aux.set1 = y.set1;
+            aux.set2 = y.set2;
+          break;
+        }
+        aux.body = body;
+        res.push(aux);    
+      }
+      console.log(res);
+    
+    
+    /*
+      make, send and get http
+      y: all info you need -> operation, (set or set1,set2), target
+      let makeHTTP: any = y =>  Rx.Observable.create(function (observer) {
+              switch(y[this.standardName]) {
+              let url: string;
+              case('Sort'): case('Filter'): case('Slice'): 
+                url = 'personal/operation/'+opToOpid(y)+'/'+converter[y.set]+'/ ';              
+              break;            
+              case('Join'):case('Merge'):
+                url = 'personal/operation/'+opToOpid(y)+'/'+converter[y.set1]+'-'+converter[y.set2]+'/';
+              break;
+              }
+              this.api
+                  .postComplete(url,body)
+                  .subscribe( 
+                  r  => {if(JSON.parse(r.text).id) { converter[target] = JSON.parse(r.text).id;observer.next(r);} }, 
+                  e  => {observer.error(e)}, 
+                  () => {observer.complete();})
+            });
+      let res: any = [];      
+      for(let y of i) {
+        res.push(makeHTTP(y));      
+      }
+      let httpForObservable : any = Observable.concat(res); // note that an array is passed
+      httpForObservable.subscribe( res => res.subscribe( r => console.log('gooder doing',r),inErr => console.log('inner error doing',inErr)), err => console.log('error doing',err));
+    */
+      res= [];
  
       for(let y of i) {
-        console.log('go!!!, ',y);
         if(y.set) {
           let body: any = {};
           switch(y[this.standardName]) { 
@@ -208,17 +293,24 @@ export class MakeOperation {
           let body: any = {};
           switch(y[this.standardName]) {
             case('Merge'):
+              body = {left_on:y.col1, right_on:y.col1};
+            break;
             case('Join'):
-            body = {left_on:y.col1, right_on:y.col1};
+              body = {left_on:y.col1, right_on:y.col1};
             break;
           }  
           res.push(this.api.postComplete('personal/operation/'+opToOpid(y)+'/'+y.set1+'-'+y.set2+'/',body));    
         }
       }
-      let httpForObservable : any = Observable.concat(res); // note that array is passed
-      httpForObservable.subscribe( res => res.subscribe( r => console.log('gooder doing',r),inErr => console.log('inner error doing',inErr)), err => console.log('error doing',err));
-    } 
+      let httpForObservable : any = Observable.concat(res); // note that an array is passed
+      return httpForObservable;
+    }else{
+      return Observable.empty();
+    }
   }
+  
+  
+  
   isComplete() {
     let result: boolean = true;
     if(this.has(this.standardName)) {

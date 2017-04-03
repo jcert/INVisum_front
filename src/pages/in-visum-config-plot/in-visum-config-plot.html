@@ -9,7 +9,7 @@
 
 <ion-content>
   <button ion-button block (click)="getGraphType()" >  {{ pH.getFromCurrent('type') || 'selecione o tipo de Gráfico'}}</button>
-  <button ion-button block (click)="getWorkingSet()" >  {{ null || 'selecione o Dataset'}}</button>
+  <button ion-button block (click)="getWorkingSet()" >  {{ pH.getFromCurrent('set')?.id || 'selecione o Dataset'}}</button>
   <button *ngFor="let j of pH.getBasicParam()" outline ion-button block (click)="getInput(j)" > {{j[0]}} : {{pH.getFromCurrent(j[0])||'valor padrão' }}</button>  
   <button *ngFor="let i of pH.getTypeParam()"  outline ion-button block (click)="getInput(i)" > {{i[0]}} : {{pH.getFromCurrent(i[0])||'valor padrão' }}</button>
   <ion-fab bottom right >

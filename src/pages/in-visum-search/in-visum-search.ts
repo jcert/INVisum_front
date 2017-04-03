@@ -1,7 +1,8 @@
 import { Component } from '@angular/core';
 import { NavController, NavParams } from 'ionic-angular';
 
-import { ApiTalker, SetSelect} from '../../providers/providers';
+import { SetSelect} from '../../providers/providers';
+import { ApiTalker  } from '../../providers/api-talker';
 import { InVisumSearchResultPage } from '../in-visum-search-result/in-visum-search-result';
 import { InVisumSearchListPage } from '../in-visum-search-list/in-visum-search-list';
 import { InVisumOperatePage } from '../in-visum-operate/in-visum-operate';
@@ -19,7 +20,7 @@ export class InVisumSearchPage {
 
   constructor(public navCtrl: NavController, public navParams: NavParams, public api: ApiTalker, public set: SetSelect) {}
 
-  shorten(x){ let max: any = 60; return (x.length > max)? x.substr(0, max-3)+"..." : x; }
+  shorten(x){ let max: any = 70; return (x.length > max)? x.substr(0, max-3)+"..." : x; }
 
   /**
    * Perform a service for the proper items.
@@ -31,7 +32,7 @@ export class InVisumSearchPage {
       return;
     }
     this.api.queryTitle({name: val}).subscribe(
-      resp  => {this.currentItems = resp;console.log(resp)},
+      resp  => {this.currentItems = resp},
       error => this.errorString =  <any> error
     );
   }

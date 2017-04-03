@@ -1,11 +1,10 @@
 import { Injectable } from '@angular/core';
-import { NavController } from 'ionic-angular';
 import { RequestOptions, Response, Headers } from '@angular/http';
 import { Observable} from 'rxjs/Observable';
 import 'rxjs/Rx';
 import 'rxjs/add/operator/map';
 import { AuthHttp, AuthConfig } from 'angular2-jwt';
-import { InVisumLoginPage } from '../in-visum-login/in-visum-login';
+import { InVisumLoginPage } from '../pages/in-visum-login/in-visum-login';
 
 
 /**
@@ -30,7 +29,7 @@ export class ApiTalker {
   url: string = 'http://127.0.0.1:8000/';
   errorString: string;
   token: any = '';
-
+  
   constructor(public authHttp: AuthHttp) {}
 
   getComplete(endpoint: string) {
@@ -102,11 +101,13 @@ export class ApiTalker {
   }
 
   private handleError (error: Response) {
+    let mess = JSON.parse(error.text()).detail || '';
     console.error(error);
     console.log("my error");
-    /*if(false) { //check if not logged in, if so, return to login-page
-      this.navCtrl.setRoot(InVisumLoginPage);
-    }*/
+    if(mess.match(/expired/)) { //check if not logged in, if so, return to login-page
+      this.token = '';
+      //how to do this?
+    }
     return Observable.throw( "server error");//error.json().error ||
   }
 }

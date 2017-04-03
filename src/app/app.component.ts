@@ -3,7 +3,8 @@ import {Platform, Nav, Config} from 'ionic-angular';
 import { StatusBar, Splashscreen } from 'ionic-native';
 
 import { Observable} from 'rxjs/Observable';
-import { ApiTalker, Settings} from '../providers/providers';
+import { Settings } from '../providers/providers';
+import { ApiTalker } from '../providers/api-talker';
 
 import { FirstRunPage } from '../pages/pages';
 import { InVisumWelcomePage } from '../pages/in-visum-welcome/in-visum-welcome';

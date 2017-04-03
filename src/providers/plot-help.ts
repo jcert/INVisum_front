@@ -24,7 +24,7 @@ export class PlotHelp {
   }
       
   graphTypes: any = Object.keys(this.graphTypeParam);
-  graphParam: any = [['legend','string']];
+  graphParam: any = [['legend','string']]; //Enum('top_left', 'top_center', 'top_right', 'center_left', 'center', 'center_right', 'bottom_left', 'bottom_center', 'bottom_right') 
   //['plot_width','number'],['plot_height','number'],  
   currentParams: any = {};
   
@@ -61,6 +61,18 @@ export class PlotHelp {
   }
   getFromCurrent(x) {
     return null || this.currentParams[x];
+  }
+  
+  optionalParameters() {
+    let body : any = {};
+    for( let y of Object.keys(this.currentParams)) {
+      body[y] = this.currentParams[y];
+    }
+    delete body.type;
+    delete body.set;
+    
+    console.log('optional body',body);
+    return body;
   }
   
   inputParam(field,x) {

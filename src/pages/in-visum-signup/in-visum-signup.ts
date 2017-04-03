@@ -3,7 +3,7 @@ import { NavController, ToastController } from 'ionic-angular';
 
 import { TranslateService } from 'ng2-translate/ng2-translate';
 import { InVisumWelcomePage } from '../in-visum-welcome/in-visum-welcome';
-import { ApiTalker} from '../../providers/providers';
+import { ApiTalker} from '../../providers/api-talker';
 import { Observable} from 'rxjs/Observable';
 
 /*

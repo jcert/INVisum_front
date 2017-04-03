@@ -5,7 +5,7 @@ import { TranslateService } from 'ng2-translate/ng2-translate';
 
 import { InVisumWelcomePage } from '../in-visum-welcome/in-visum-welcome';
 import { InVisumSignupPage } from '../in-visum-signup/in-visum-signup';
-import { ApiTalker} from '../../providers/providers';
+import { ApiTalker} from '../../providers/api-talker';
 import { Observable} from 'rxjs/Observable';
 
 /*
@@ -44,7 +44,7 @@ export class InVisumLoginPage {
 
   doSignup() {
     this.api.authenticate(this.account.name,this.account.password);
-    Observable.timer(100).subscribe(() => {console.log('observable signup');this.navCtrl.setRoot(InVisumWelcomePage)}); // async operation
+    Observable.timer(300).subscribe(() => {console.log('observable signup');if(this.api.authenticated()){this.navCtrl.setRoot(InVisumWelcomePage)}}); // async operation
   
     // Attempt to login in through our User service
     /*

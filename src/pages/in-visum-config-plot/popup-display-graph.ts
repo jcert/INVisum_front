@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import {  DomSanitizer } from '@angular/platform-browser';
 import { NavController, NavParams, ViewController } from 'ionic-angular';
 import { PlotHelp } from '../../providers/providers';
-import { ApiTalker } from '../../providers/providers';
+import { ApiTalker  } from '../../providers/api-talker';
 
 
 @Component({

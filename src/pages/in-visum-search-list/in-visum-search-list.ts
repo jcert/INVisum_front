@@ -2,7 +2,8 @@ import { Component } from '@angular/core';
 import { NavController, NavParams } from 'ionic-angular';
 
 
-import { ApiTalker, SetSelect} from '../../providers/providers';
+import { SetSelect} from '../../providers/providers';
+import { ApiTalker  } from '../../providers/api-talker';
 import { InVisumSearchResultPage } from '../in-visum-search-result/in-visum-search-result';
 import { Dataset } from '../../models/dataset';
 

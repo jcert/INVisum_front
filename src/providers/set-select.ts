@@ -6,20 +6,21 @@ export class SetSelect {
   
   }
   add(item) { //make this add_unique
-    if (-1 == this.sets.indexOf(item)) this.sets.push(item);
+    
+    
+    if ( this.sets.findIndex(x => x.id==item.id) ) this.sets.push(item);
   }
   remove(item) {
-    if (-1 != this.sets.indexOf(item)) this.sets.splice(this.sets.indexOf(item),1);
+    if ( this.sets.findIndex(x => x.id==item.id) ) this.sets.splice(this.sets.indexOf(item),1);
   }
   remove_all() {
-    delete this.sets;
     this.sets = [];
   }
   get() {
     return this.sets;
   }
   exist(item){
-    return (-1 != this.sets.indexOf(item));
+    return (-1 != this.sets.findIndex(x => x.id==item.id));
   }
   size() {
     return this.sets.length;

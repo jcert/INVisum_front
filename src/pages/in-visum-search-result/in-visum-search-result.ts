@@ -16,7 +16,7 @@ export class InVisumSearchResultPage {
   }
   
   getRating() {
-    return Math.round(this.item.rating.average*5.0/100.0);
+    return Math.round(this.item.rating.average+50*5.0/100.0);
   }
 
 }

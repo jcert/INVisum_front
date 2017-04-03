@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { NavController, PopoverController, ModalController } from 'ionic-angular';
-import { PlotHelp, ApiTalker } from '../../providers/providers';
+import { PlotHelp  } from '../../providers/providers';
+import { ApiTalker  } from '../../providers/api-talker';
 import { PopupSelectTypePage } from './popup-select-type';
 import { PopupInsertTypePage } from './popup-insert-type';
 import { PopupDisplayGraphPage } from './popup-display-graph';
@@ -44,9 +45,9 @@ export class InVisumConfigPlotPage {
     let typeName: any = this.pH.getFromCurrent('type');
     if(set&&typeName) {
       let id: any  = set.id;
-      let typeId: any = this.pH.graphTypeToId(typeName); 
-      console.log(this.pH.getAllFromCurrent());
-      this.api.postComplete('personal/plot/'+typeId+'/'+id+'/', {}).subscribe( res => {this.goToGraph(JSON.parse(res.text()).id)});
+      let typeId: any = this.pH.graphTypeToId(typeName);
+      let body : any = this.pH.optionalParameters(); 
+      this.api.postComplete('personal/plot/'+typeId+'/'+id+'/', body).subscribe( res => {this.goToGraph(JSON.parse(res.text()).id)});
         
     }
   }

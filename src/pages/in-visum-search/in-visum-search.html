@@ -35,7 +35,7 @@
             </ion-col>
           </ion-row>
         </ion-grid>
-        <p class="my-card-text" (click)="openItem(item)">{{ (item.about) }}</p>
+        <p class="my-card-text" (click)="openItem(item)">{{ shorten(item.about) }}</p>
         <!-- <div><reputation-icon item-left icon="star" reputation={{item.rating}} ></reputation-icon></div> -->    
       </ion-card-content>
     </ion-card>
