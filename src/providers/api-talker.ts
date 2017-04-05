@@ -29,6 +29,7 @@ export class ApiTalker {
   url: string = 'http://127.0.0.1:8000/';
   errorString: string;
   token: any = '';
+  shouldRenew : any = false;  
   
   constructor(public authHttp: AuthHttp) {}
 
@@ -58,6 +59,7 @@ export class ApiTalker {
   }
   
   logout() {
+    this.shouldRenew = false;
     this.token = '';
   }
   
@@ -68,13 +70,17 @@ export class ApiTalker {
   //curl -X POST -H "Content-Type: application/json" -d '{"token":"<EXISTING_TOKEN>"}' http://localhost:8000/
   
   reauthenticate(user:string, pass:string) {
-    Observable.interval(1000*60*3)
+    if(this.shouldRenew) {
+    Observable.timer(1000*6*3)
               .subscribe( r => {
                                   return this.authHttp.post(this.url+'auth/',{'username':user,'password':pass})
-                                  .subscribe( resp => {this.token = JSON.parse(resp.text()).token}, err => this.handleError(err));} );
+                                  .subscribe( resp => {this.token = JSON.parse(resp.text()).token;this.reauthenticate(user, pass)}, 
+                                              err => this.handleError(err));} );
+    }
   }
   
   authenticate(user:string, pass:string) {
+    this.shouldRenew = true;
     this.reauthenticate(user, pass);
     return this.authHttp.post(this.url+'auth/',{'username':user,'password':pass})
                .subscribe( resp => {this.token = JSON.parse(resp.text()).token}, err => this.handleError(err));
