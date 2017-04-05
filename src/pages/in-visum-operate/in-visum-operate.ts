@@ -56,8 +56,10 @@ export class InVisumOperatePage {
   }
   
   sFcol(colField:string) { //select from column
-    let x = colField.match('col(\d?)');
+    let x = colField.match(/col(\d?)/);
+    console.log('get from ',x,'set ','set'+x[1]);
     let y: any = this.mOp.getHeaders(this.mOp.getOp()['set'+x[1]]);
+    console.log('get headers ',y);
     //get in y the colums to the input set
     let conditions : any = y;
     this.listPopover(colField,conditions);
@@ -104,7 +106,7 @@ export class InVisumOperatePage {
   goPlotConfig() {
     this.mOp
         .StackCleaner()
-        .subscribe( res => res.subscribe( r => console.log('gooder doing',r),inErr => console.log('inner error doing',inErr)), 
+        .subscribe( res => {res;console.log('all done ',res)}, 
                     err => console.log('error doing',err),
                      () => this.navCtrl.push(InVisumConfigPlotPage));
   }

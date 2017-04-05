@@ -11,12 +11,12 @@ import { MakeOperation} from '../../providers/providers';
       
       <ion-item *ngFor="let i of keysListMultiple">
         <ion-label> {{ i }} </ion-label>
-        <ion-toggle checked="false" (click)="toggle(i)" ></ion-toggle>
+        <ion-toggle checked="false" (tap)="toggle(i)" ></ion-toggle>
       </ion-item>
       <button ion-item *ngIf="keysListMultiple.length>0" [ngStyle]="{'text-align': 'center'}"  (click)="closeMany()">Ok</button>
       
       <ion-item >
-        <button ion-item *ngFor="let i of keysListOne" (click)="closeOne(i)">{{i}}</button>
+        <button ion-item *ngFor="let i of keysListOne" (tap)="closeOne(i)">{{i}}</button>
       </ion-item>
     </ion-list>
   `

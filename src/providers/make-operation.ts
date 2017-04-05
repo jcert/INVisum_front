@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
 import { ApiTalker } from './api-talker';
 import { SetSelect } from './set-select';
-import 'rxjs/add/operator/map';
-import { Observable} from 'rxjs/Observable';
+import Rx from 'rxjs/Rx';
+
 
 @Injectable()
 export class MakeOperation {
@@ -39,7 +39,7 @@ export class MakeOperation {
     for(let i of this.sets.get()) {
         observableArray.push(this.api.postComplete('datasets/personal/'+i.id+'/',{})); //
       }
-    let kw  :any = Observable.concat(observableArray);
+    let kw  :any = Rx.Observable.concat(observableArray);
     let kww :any = [];
     
     
@@ -53,9 +53,9 @@ export class MakeOperation {
         }, 
       error => console.log('error'),
       () => {
-              let kwwObser :any = Observable.concat(kww,kw);
+              let kwwObser :any = Rx.Observable.concat(kww,kw);
               kwwObser.subscribe( r => {r.subscribe()}, e => console.log(e), () => {
-                    Observable.timer(500).subscribe(
+                    Rx.Observable.timer(500).subscribe(
                       response => 
                         this.api.getComplete('personal/')
                             .map( resp => resp.json())
@@ -85,7 +85,7 @@ export class MakeOperation {
       y[x] = i;
     }
     this.clearStack();
-    Observable.create( (observer) =>
+    Rx.Observable.create( (observer) =>
       {
         for(let i of listPersonal) {//concurrency issues here
           let z = i.id;
@@ -153,6 +153,10 @@ export class MakeOperation {
           this.workingSet['t'+this.index][i] = (Array.isArray(this.workingSet[x1][i]))?this.workingSet[x1][i].concat(this.workingSet[x2][i]) :this.workingSet[x1][i]+this.workingSet[x2][i];
         }
         break;
+      case('Filter'):
+        this.workingSet['t'+this.index] = this.workingSet[this.opObj.set];
+        this.workingSet['t'+this.index].headers = this.opObj.items;
+        break;
       default:
         this.workingSet['t'+this.index] = this.workingSet[this.opObj.set]; 
     }
@@ -190,6 +194,7 @@ export class MakeOperation {
       //then, you convert all the tmp names, i.e. t0, t23, t 50, to the personal dataset which must be operated 
       i = i.reverse();
       let converter: any = {};
+      /*
       for(let y of i) {
         //substitute their tempSet for the actual one
         if(y.set) {
@@ -202,7 +207,7 @@ export class MakeOperation {
           converter[y.index] = y.index; //pass onward the temporary name, it will get a real one after the op request is done
         }
         
-      }
+      }*/
       
       
       
@@ -244,35 +249,50 @@ export class MakeOperation {
       console.log(res);
     
     
+              console.log('converter out',converter);
     /*
       make, send and get http
       y: all info you need -> operation, (set or set1,set2), target
-      let makeHTTP: any = y =>  Rx.Observable.create(function (observer) {
-              switch(y[this.standardName]) {
-              let url: string;
-              case('Sort'): case('Filter'): case('Slice'): 
-                url = 'personal/operation/'+opToOpid(y)+'/'+converter[y.set]+'/ ';              
+    */
+      let conv: any = {};
+      let resolve : any = (id) => {if(id[0]=='t'){return conv[id]; }else{return id; }};
+      let makeHTTP: any = (y,api) =>  Rx.Observable.create(function (observer) {
+              let url: string;     
+              let opToOpid = (z) => { let dict: any = {'Sort':6,'Filter':3,'Slice':1,'Merge':1,'Join':1}; return dict[z.type]};
+              console.log('conv ',JSON.stringify(conv));
+              switch(y.type) {
+              case('Sort'): 
+              case('Filter'): 
+              case('Slice'):
+                conv[y.target] = resolve(y.set); //changes take place on the same set 
+                url = 'personal/operation/'+opToOpid(y)+'/'+resolve(y.set)+'/ ';              
               break;            
-              case('Join'):case('Merge'):
-                url = 'personal/operation/'+opToOpid(y)+'/'+converter[y.set1]+'-'+converter[y.set2]+'/';
+              case('Join'):
+              case('Merge'):
+                //will have to wait for the new id returning from the resquest
+                url = 'personal/operation/'+opToOpid(y)+'/'+resolve(y.set1)+'-'+resolve(y.set2)+'/';
               break;
               }
-              this.api
-                  .postComplete(url,body)
+              api.postComplete(url,y.body)
                   .subscribe( 
-                  r  => {if(JSON.parse(r.text).id) { converter[target] = JSON.parse(r.text).id;observer.next(r);} }, 
+                  r  => { console.log('conv at the inner r',r);
+                          let kk = JSON.parse(r.text() || "{}").id; if(kk) { conv[y.target] = kk; };
+                          observer.next(r)}, 
                   e  => {observer.error(e)}, 
-                  () => {observer.complete();})
+                  () => {observer.complete()})    
             });
-      let res: any = [];      
-      for(let y of i) {
-        res.push(makeHTTP(y));      
+      let auxiliar: any = [];      
+      
+      for(let y of res) {
+        auxiliar.push(makeHTTP(y,this.api));      
       }
-      let httpForObservable : any = Observable.concat(res); // note that an array is passed
-      httpForObservable.subscribe( res => res.subscribe( r => console.log('gooder doing',r),inErr => console.log('inner error doing',inErr)), err => console.log('error doing',err));
-    */
+      
+      let httpForObservable1 : any = Rx.Observable.concat(auxiliar); // note that an array is passed
+      return httpForObservable1.concatAll();
+      //.subscribe( res => res.subscribe( r => console.log('gooder doing',r),inErr => console.log('inner error doing',inErr), err => console.log('error doing',err)));
+    /*
       res= [];
- 
+      
       for(let y of i) {
         if(y.set) {
           let body: any = {};
@@ -303,9 +323,11 @@ export class MakeOperation {
         }
       }
       let httpForObservable : any = Observable.concat(res); // note that an array is passed
+   
       return httpForObservable;
+    */
     }else{
-      return Observable.empty();
+      return Rx.Observable.empty();
     }
   }
   
