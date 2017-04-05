@@ -45,11 +45,11 @@ export class ApiTalker {
   
   postComplete(endpoint: string, body: any) {
     let y = new RequestOptions({method:'post',headers:new Headers({'Content-Type': 'application/json','Authorization': 'JWT '+this.token}), withCredentials:true});
-    return this.authHttp.post(this.url + endpoint, body, y).catch(this.handleError);;
+    return this.authHttp.post(this.url + endpoint, body, y).catch(this.handleError);
   }
   deleteComplete(endpoint: string) {
     let y = new RequestOptions({method:'delete',headers:new Headers({'Content-Type': 'application/json','Authorization': 'JWT '+this.token}), withCredentials:true});
-    return this.authHttp.delete(this.url + endpoint, y).catch(this.handleError);;
+    return this.authHttp.delete(this.url + endpoint, y).catch(this.handleError);
   }
  
   getFeatured() {
@@ -65,7 +65,17 @@ export class ApiTalker {
     return this.token != '';
   }
   
+  //curl -X POST -H "Content-Type: application/json" -d '{"token":"<EXISTING_TOKEN>"}' http://localhost:8000/
+  
+  reauthenticate(user:string, pass:string) {
+    Observable.interval(1000*60*3)
+              .subscribe( r => {
+                                  return this.authHttp.post(this.url+'auth/',{'username':user,'password':pass})
+                                  .subscribe( resp => {this.token = JSON.parse(resp.text()).token}, err => this.handleError(err));} );
+  }
+  
   authenticate(user:string, pass:string) {
+    this.reauthenticate(user, pass);
     return this.authHttp.post(this.url+'auth/',{'username':user,'password':pass})
                .subscribe( resp => {this.token = JSON.parse(resp.text()).token}, err => this.handleError(err));
   }
