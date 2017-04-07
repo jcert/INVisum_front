@@ -34,7 +34,7 @@ export class ApiTalker {
   constructor(public authHttp: AuthHttp) {}
 
   changeBase(xurl) {
-    this.url = xurl; 
+    this.url = 'http://'+xurl+'/'; 
   }
   
   getComplete(endpoint: string) {
@@ -75,7 +75,7 @@ export class ApiTalker {
   
   reauthenticate(user:string, pass:string) {
     if(this.shouldRenew) {
-    Observable.timer(1000*6*3)
+    Observable.timer(1000*60*3)
               .subscribe( r => {
                                   return this.authHttp.post(this.url+'auth/',{'username':user,'password':pass})
                                   .subscribe( resp => {this.token = JSON.parse(resp.text()).token;this.reauthenticate(user, pass)}, 
