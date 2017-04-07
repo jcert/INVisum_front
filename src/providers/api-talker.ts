@@ -33,6 +33,10 @@ export class ApiTalker {
   
   constructor(public authHttp: AuthHttp) {}
 
+  changeBase(xurl) {
+    this.url = xurl; 
+  }
+  
   getComplete(endpoint: string) {
     let y = new RequestOptions({method:'get',headers:new Headers({'Content-Type': 'application/json','Accept': 'application/json','Authorization': 'JWT '+this.token}), withCredentials:true});
     return this.authHttp.get(this.url + endpoint, y).catch(this.handleError);;

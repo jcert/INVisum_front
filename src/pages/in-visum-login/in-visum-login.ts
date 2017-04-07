@@ -27,6 +27,7 @@ export class InVisumLoginPage {
     email: 'test@example.com',
     password: 'a12345678'
   };
+  ip : string = '';
 
   // Our translated text strings
   private signupErrorString: string;
@@ -63,6 +64,10 @@ export class InVisumLoginPage {
       toast.present();
     });*/
     
+  }
+  
+  changeIp() {
+    this.api.changeBase(this.ip);
   }
 
   ionViewDidLoad() {

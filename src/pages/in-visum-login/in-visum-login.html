@@ -27,5 +27,12 @@
       </ion-item>
     </ion-list>
   </form>
+  <ion-item>
+    <ion-label fixed><ion-icon name="ip-text" color="bright"></ion-icon></ion-label>
+    <ion-input type="text" [(ngModel)]="ip" name="ip"></ion-input>
+  </ion-item>
+  <ion-item>
+    <button ion-button full (click)="changeIp()">send ip</button>
+  </ion-item>
 </ion-content>
 
